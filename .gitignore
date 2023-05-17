@@ -5,6 +5,12 @@
 *.tfstate
 *.tfstate.*
 
+*.hcl
+
+# Keypairs files
+*.pub
+*keypair
+
 # Crash log files
 crash.log
 crash.*.log
@@ -32,3 +38,5 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+/terraform-course

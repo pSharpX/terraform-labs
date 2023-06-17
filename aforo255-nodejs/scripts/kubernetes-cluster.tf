@@ -1,7 +1,9 @@
+data "digitalocean_kubernetes_versions" "kubernetes-versions" {}
+
 resource "digitalocean_kubernetes_cluster" "k8s-cluster" {
     name = "k8s-cluster"
     region = lookup(var.DO_REGIONS, var.DO_DEFAULT_REGION)
-    version = lookup(var.DO_K8S_VERSIONS, "latest")
+    version = "${data.digitalocean_kubernetes_versions.kubernetes-versions.latest_version}"
     tags = [ "terraform", "cluster", "test" ]
 
     node_pool {

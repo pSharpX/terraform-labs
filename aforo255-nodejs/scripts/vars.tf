@@ -100,11 +100,3 @@ variable "DO_DROPLET_SIZES" {
       "g-4vcpu-16gb" = "g-4vcpu-16gb"
     }
 }
-
-variable "DO_K8S_VERSIONS" {
-    type = map(string)
-    default = {
-        "latest": "1.26.3-do.0"
-        "oldest": "1.24.12-do.0"
-    }
-}

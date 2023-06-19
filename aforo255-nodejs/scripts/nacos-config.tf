@@ -12,7 +12,6 @@ resource "local_file" "nacos_config" {
         db_mongo_host = "${digitalocean_database_cluster.mongo-cluster.host}"
         db_mongo_port = "${digitalocean_database_cluster.mongo-cluster.port}"
         db_mongo_cluster = "${digitalocean_database_cluster.mongo-cluster.name}"
-        db_mongo_uri = "${digitalocean_database_cluster.mongo-cluster.uri}"
         db_mongo_username = "${digitalocean_database_user.aforo_mongo_user.name}"
         db_mongo_password = "${digitalocean_database_user.aforo_mongo_user.password}"
         db_redis_host = "${digitalocean_database_cluster.redis-cluster.host}"

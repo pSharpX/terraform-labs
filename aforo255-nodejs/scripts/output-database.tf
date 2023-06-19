@@ -3,7 +3,7 @@ output "pg_cluster" {
         "pg-cluster": digitalocean_database_cluster.pg-cluster.host
         "pg-port": digitalocean_database_cluster.pg-cluster.port
         "pg-database-name": digitalocean_database_cluster.pg-cluster.database
-        "pg-username": digitalocean_database_cluster.pg-cluster.user
+        "pg-username": digitalocean_database_user.aforo_pg_user.name
     }
 }
 
@@ -12,7 +12,7 @@ output "mysql_cluster" {
         "mysql-cluster": digitalocean_database_cluster.mysql-cluster.host
         "mysql-port": digitalocean_database_cluster.mysql-cluster.port
         "mysql-database-name": digitalocean_database_cluster.mysql-cluster.database
-        "mysql-username": digitalocean_database_cluster.mysql-cluster.user
+        "mysql-username": digitalocean_database_user.aforo_mysql_user.name
     }
 }
 
@@ -21,7 +21,7 @@ output "mongo_cluster" {
         "mongo-cluster": digitalocean_database_cluster.mongo-cluster.host
         "mongo-port": digitalocean_database_cluster.mongo-cluster.port
         "mongo-database-name": digitalocean_database_cluster.mongo-cluster.database
-        "mongo-username": digitalocean_database_cluster.mongo-cluster.user
+        "mongo-username": digitalocean_database_user.aforo_mongo_user.name
     }
 }
 

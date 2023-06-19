@@ -16,3 +16,11 @@ resource "local_file" "argocd-manifest" {
     content = "${data.http.argocd-resource-manifest.response_body}"
     filename = "./configs/argocd-install.yaml"
 }
+
+resource "kubectl_manifest" "argocd" {
+    yaml_body = "${local_file.argocd-manifest.content}"
+
+    depends_on = [ 
+        local_file.argocd-manifest
+     ]
+}

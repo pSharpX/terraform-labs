@@ -1,0 +1,25 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+hostname: docker-server
+users:
+  - name: docker
+    groups: docker
+packages:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - gnupg
+  - software-properties-common
+runcmd:
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+  - add-apt-repository "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - apt-get update -y
+  - apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  - systemctl start docker
+  - systemctl enable docker
+  - docker network create nodejs-network
+  - docker run --name component-config --network nodejs-network -e MODE=standalone -p 8848:8848 -d nacos/nacos-server:v2.0.3
+  - docker run --name service-broker --network nodejs-network -p 2181:2181 -p 9092:9092 -e ADVERTISED_HOST=127.0.0.1 -e NUM_PARTITIONS=3 -d johnnypark/kafka-zookeeper:2.6.0
+  - docker run --name component-logger --network nodejs-network -e ACCEPT_EULA=Y --name service-log -p 5341:80 -d datalust/seq:2021.3
+  - docker run --name component-tracer --network nodejs-network -p  9411:9411 -d openzipkin/zipkin:2

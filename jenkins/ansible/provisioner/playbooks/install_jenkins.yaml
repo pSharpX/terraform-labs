@@ -1,7 +1,7 @@
 ---
 - name: Jenkins Mater Setup
   hosts: master
-  become: yes
+  become: true
   gather_facts: true
   tasks:
     - name: Add Jenkins dependencies

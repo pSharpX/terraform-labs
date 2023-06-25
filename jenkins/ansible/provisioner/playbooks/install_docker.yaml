@@ -1,7 +1,7 @@
 ---
 - name: Docker Setup
   hosts: jenkins-servers
-  become: yes
+  become: true
   gather_facts: true
   tasks:
     - name: Add docker dependencies

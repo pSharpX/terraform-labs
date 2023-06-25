@@ -1,7 +1,7 @@
 ---
 - name: Tools Setup
   hosts: jenkins-servers
-  become: yes
+  become: true
   gather_facts: true
   tasks:
     - name: Tools Installation

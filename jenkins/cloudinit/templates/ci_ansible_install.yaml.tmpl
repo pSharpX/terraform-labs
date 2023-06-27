@@ -1,0 +1,64 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+hostname: ansible-server
+packages:
+  - tree
+  - git
+  - python3-pip
+users:
+  - name: ansible
+    gecos: Ansible User
+    shell: /bin/bash
+    groups: users,admin,wheel
+    sudo: ALL=(ALL) NOPASSWD:ALL
+ansible:
+  install_method: pip
+  package_name: ansible
+  galaxy:
+    actions:
+      - ["ansible-galaxy", "collection", "install", "community.general"]
+  setup_controller:
+    run_ansible:
+      - playbook_dir: /opt
+        playbook_name: ping.yaml
+        become_user: ansible
+        timeout: 120
+        forks: 1
+        private_key: /opt/rsa
+        inventory: /opt/inventory
+write_files:
+  - path: /opt/rsa
+    owner: ansible:ansible
+    content: |
+      ${base64encode("${ansible_rsa}")}
+    encoding: b64
+    permissions: '0750'
+    defer: true
+
+  - path: /opt/inventory
+    owner: ansible:ansible
+    content: |
+      ${base64encode("${ansible_inventory}")}
+    encoding: b64
+    permissions: '0750'
+    defer: true
+
+  - path: /opt/ping.yaml
+    owner: ansible:ansible
+    content: |
+      ${base64encode("${ansible_ping}")}
+    encoding: b64
+    permissions: '0750'
+    defer: true
+
+  - path: /opt/ansible-playbook.yaml
+    owner: ansible:ansible
+    content: |
+      ${base64encode("${ansible_playbook}")}
+    encoding: b64
+    permissions: '0750'
+    defer: true
+runcmd:
+  - "pip install ansible"
+  - "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --inventory-file '/opt/inventory' --private-key '/opt/rsa' /opt/ping.yaml"

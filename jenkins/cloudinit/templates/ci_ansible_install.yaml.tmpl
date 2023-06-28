@@ -44,21 +44,16 @@ write_files:
     permissions: '0750'
     defer: true
 
-  - path: /opt/ping.yaml
+%{ for path,content in zipmap(split(",", playbooks_path), split(",", playbooks_content)) ~}
+  - path: ${path}
     owner: ansible:ansible
     content: |
-      ${base64encode("${ansible_ping}")}
+      ${base64encode("${content}")}
     encoding: b64
     permissions: '0750'
     defer: true
 
-  - path: /opt/ansible-playbook.yaml
-    owner: ansible:ansible
-    content: |
-      ${base64encode("${ansible_playbook}")}
-    encoding: b64
-    permissions: '0750'
-    defer: true
+%{ endfor }
 runcmd:
   - "pip install ansible"
-  - "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --inventory-file '/opt/inventory' --private-key '/opt/rsa' /opt/ping.yaml"
+  - "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook --inventory-file '/opt/inventory' --private-key '/opt/rsa' /opt/playbook.yaml"

@@ -1,25 +1,21 @@
 locals {
-    playbooks = [
-        {
-            path: "/opt/ping.yaml"
-            content: "./provisioner/ping.yaml"
-        },
-        {
-            path: "/opt/ansible-playbook.yaml"
-            content: "./provisioner/playbook.yaml"
-        },
-        {
-            path: "/opt/playbooks/install_docker.yaml"
-            content: "./provisioner/playbooks/install_docker.yaml"
-        },
-        {
-            path: "/opt/playbooks/install_jenkins.yaml"
-            content: "./provisioner/playbooks/install_jenkins.yaml"
-        },
-        {
-            path: "/opt/playbooks/install_tools.yaml"
-            content: "./provisioner/playbooks/install_tools.yaml"
-        },
+    playbooks_path = [
+        "/opt/ping.yaml",
+        "/opt/ansible-playbook.yaml",
+        "/opt/playbooks/install_docker.yaml",
+        "/opt/playbooks/install_jenkins.yaml",
+        "/opt/playbooks/install_tools.yaml",
+        "/opt/group_vars/jenkins-servers.yaml",
+        "/opt/host_vars/master.yaml"
+    ]
+    playbooks_content = [
+        file("./provisioner/ping.yaml"),
+        file("./provisioner/playbook.yaml"),
+        file("./provisioner/playbooks/install_docker.yaml"),
+        file("./provisioner/playbooks/install_jenkins.yaml"),
+        file("./provisioner/playbooks/install_tools.yaml"),
+        file("./provisioner/group_vars/jenkins-servers.yaml"),
+        file("./provisioner/host_vars/master.yaml")
     ]
 }
 
@@ -31,8 +27,8 @@ data "template_file" "ansible_install" {
         ansible_inventory = templatefile("./templates/inventory.tmpl", {
             jenkins_server = digitalocean_droplet.jenkins_server.ipv4_address
         })
-        ansible_ping = file("./provisioner/ping.yaml")
-        ansible_playbook = file("./provisioner/playbook.yaml")
+        playbooks_path = join(",", local.playbooks_path)
+        playbooks_content = join(",", local.playbooks_content)
     }
 
     depends_on = [ 

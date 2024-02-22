@@ -1,5 +1,5 @@
 output "db-host" {
-    value = aws_db_instance.onebank-database.domain_fqdn
+    value = aws_db_instance.onebank-database.endpoint
 }
 
 output "db-username" {

@@ -11,27 +11,37 @@ variable "AWS_SECRET_KEY" {
     type = string  
 }
 
-variable "AMIS" {
-    type = map(string)
-    default = {
-      "us-east-1" = "ami-03c7d01cf4dedc891"
-      "us-east-2" = "ami-03c7d01cf4dedc891"
-      "us-west-1" = "ami-03c7d01cf4dedc891"
-      "us-west-2" = "ami-03c7d01cf4dedc891"
+variable "APPLICATION_ID" {
+    default = "onebank"
+    type = string
+    description = "Application Identifier"
+}
+
+variable "ENVIRONMENT" {
+    default = "dev"
+    type = string
+    description = "Environment where resources are provisioned"
+
+    validation {
+      condition = contains(["dev", "uat", "staging", "prod"], var.ENVIRONMENT)
+      error_message = "Allowed values for ENVIRONMENT are [dev, uat, staging, prod]"
     }
 }
 
-variable "PATH_TO_PUBLIC_KEY" {
+variable "TECHNICAL_OWNER" {
+    default = "TeamGOAT"
     type = string
-    default = "ec2-sample03-keypair.pub"
+    description = "Team responsable for application support"
 }
 
-variable "PATH_TO_PRIVATE_KEY" {
+variable "PROVISIONER" {
+    default = "Terraform"
     type = string
-    default = "ec2-sample03-keypair"
+    description = "Tool used to provision resources"  
 }
 
-variable "INSTANCE_USERNAME" {
+variable "DATA_CLASSIFICATION" {
+    default = "Restricted"
     type = string
-    default = "ec2-user"
+    description = "A classification for the type of data managed by resources"
 }

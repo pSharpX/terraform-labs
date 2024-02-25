@@ -63,7 +63,7 @@ data "aws_ami" "al2023" {
         values = ["x86_64"]
     }
 
-    owners = ["099720109477"]
+    owners = ["amazon"]
 }
 
 data "aws_ami" "amazonlinux" {

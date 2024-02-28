@@ -1,6 +1,7 @@
 # nat gw
 resource "aws_eip" "nat" {
     vpc = true
+    tags = local.common_tags
 }
 
 resource "aws_nat_gateway" "nat-gw" {
@@ -16,11 +17,7 @@ resource "aws_route_table" "main-private" {
         cidr_block = "0.0.0.0/0"
         nat_gateway_id = "${aws_nat_gateway.nat-gw.id}"
     }
-
-    tags = {
-        Name: "main-private-1"
-        Provisioner: "terraform"
-    }
+    tags = merge({Name: "main-private-1"}, local.common_tags)
 }
 
 # route associations private

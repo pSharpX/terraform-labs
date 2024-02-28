@@ -3,11 +3,7 @@ resource "aws_subnet" "main-public-1" {
     cidr_block = "10.0.1.0/24"
     map_public_ip_on_launch = true
     availability_zone = "us-east-1a"
-
-    tags = {
-        Name: "main-public-1"
-        Provisioner: "terraform"
-    }
+    tags = merge({Name: "main-public-1"}, local.common_tags)
 }
 
 resource "aws_subnet" "main-public-2" {
@@ -15,11 +11,7 @@ resource "aws_subnet" "main-public-2" {
     cidr_block = "10.0.2.0/24"
     map_public_ip_on_launch = true
     availability_zone = "us-east-1b"
-
-    tags = {
-        Name: "main-public-2"
-        Provisioner: "terraform"
-    }
+    tags = merge({Name: "main-public-2"}, local.common_tags)
 }
 
 resource "aws_subnet" "main-public-3" {
@@ -27,11 +19,7 @@ resource "aws_subnet" "main-public-3" {
     cidr_block = "10.0.3.0/24"
     map_public_ip_on_launch = true
     availability_zone = "us-east-1c"
-
-    tags = {
-        Name: "main-public-3"
-        Provisioner: "terraform"
-    }
+    tags = merge({Name: "main-public-3"}, local.common_tags)
 }
 
 resource "aws_subnet" "main-private-1" {
@@ -39,11 +27,7 @@ resource "aws_subnet" "main-private-1" {
     cidr_block = "10.0.4.0/24"
     map_public_ip_on_launch = false
     availability_zone = "us-east-1a"
-
-    tags = {
-        Name: "main-private-1"
-        Provisioner: "terraform"
-    }
+    tags = merge({Name: "main-private-1"}, local.common_tags)
 }
 
 resource "aws_subnet" "main-private-2" {
@@ -51,11 +35,7 @@ resource "aws_subnet" "main-private-2" {
     cidr_block = "10.0.5.0/24"
     map_public_ip_on_launch = false
     availability_zone = "us-east-1b"
-
-    tags = {
-        Name: "main-private-2"
-        Provisioner: "terraform"
-    }
+    tags = merge({Name: "main-private-2"}, local.common_tags)
 }
 
 resource "aws_subnet" "main-private-3" {
@@ -63,20 +43,12 @@ resource "aws_subnet" "main-private-3" {
     cidr_block = "10.0.6.0/24"
     map_public_ip_on_launch = false
     availability_zone = "us-east-1c"
-
-    tags = {
-        Name: "main-private-3"
-        Provisioner: "terraform"
-    }
+    tags = merge({Name: "main-private-3"}, local.common_tags)
 }
 
 resource "aws_internet_gateway" "main-igw" {
     vpc_id = aws_vpc.vpc-sample01.id
-
-    tags = {
-        Name: "main-igw"
-        Provisioner: "terraform"
-    }
+    tags = merge({Name: "main-igw"}, local.common_tags)
 }
 
 resource "aws_route_table" "main-public" {
@@ -85,11 +57,7 @@ resource "aws_route_table" "main-public" {
         cidr_block = "0.0.0.0/0"
         gateway_id =  "${aws_internet_gateway.main-igw.id}"
     }
-
-    tags = {
-        Name: "main-public-1"
-        Provisioner: "terraform"
-    }
+    tags = merge({Name: "main-public-1"}, local.common_tags)
 }
 
 resource "aws_route_table_association" "main-public-1-a" {

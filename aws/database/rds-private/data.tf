@@ -19,8 +19,8 @@ data "aws_subnet" "main-private-2" {
     id = element(var.DB_SUBNETS, 3)
 }
 
-data "aws_rds_engine_version" "postgres-engine" {
-    engine = "postgres"
+data "aws_rds_engine_version" "db-engine" {
+    engine = var.DB_ENGINE
     default_only = true
 }
 

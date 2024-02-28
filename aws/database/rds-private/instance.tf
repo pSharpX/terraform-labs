@@ -10,6 +10,6 @@ resource "aws_instance" "onebank-backend" {
     instance_type = "t2.micro"
     key_name = aws_key_pair.onebank-keypair.key_name
     subnet_id = data.aws_subnet.main-public-1.id
-    vpc_security_group_ids = [ aws_security_group.allow-ssh-sg.id ]
+    vpc_security_group_ids = [ aws_security_group.backend-sg.id ]
     tags = local.instance_tags
 }

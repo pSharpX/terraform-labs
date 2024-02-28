@@ -26,11 +26,11 @@ output "connection-string" {
 
 output "db-engine" {
     value = {
-        "engine" = data.aws_rds_engine_version.postgres-engine.engine
-        "description" = data.aws_rds_engine_version.postgres-engine.engine_description
-        "version" = data.aws_rds_engine_version.postgres-engine.version
-        "latest" = data.aws_rds_engine_version.postgres-engine.latest
-        "status" = data.aws_rds_engine_version.postgres-engine.status
+        "engine" = data.aws_rds_engine_version.db-engine.engine
+        "description" = data.aws_rds_engine_version.db-engine.engine_description
+        "version" = data.aws_rds_engine_version.db-engine.version
+        "latest" = data.aws_rds_engine_version.db-engine.latest
+        "status" = data.aws_rds_engine_version.db-engine.status
     }
 }
 

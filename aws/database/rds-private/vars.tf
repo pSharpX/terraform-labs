@@ -81,3 +81,25 @@ variable "PATH_TO_PRIVATE_KEY" {
     type = string
     default = "./ssh/ec2-keypair"
 }
+
+variable "DB_ENGINE" {
+    type = string
+    default = "postgres"
+    description = "Choosen DB Engine to be provisioned with RDS"
+
+    validation {
+      condition = contains(["mariadb", "mysql", "postgres", "sqlserver-se"], var.DB_ENGINE)
+      error_message = "Allowed values for DB_ENGINE are [mariadb, mysql, postgres, sqlserver-se]"
+    }
+}
+
+variable "AMI_RESOLVER" {
+    type = string
+    default = "ubuntu"
+    description = "Choosen AMI resolver to be used for ec2 instance"
+
+    validation {
+      condition = contains(["ubuntu", "al2023", "amazonlinux", "windows"], var.AMI_RESOLVER)
+      error_message = "Allowed values for AMI_RESOLVER are [ubuntu, al2023, amazonlinux, windows]"
+    }
+}

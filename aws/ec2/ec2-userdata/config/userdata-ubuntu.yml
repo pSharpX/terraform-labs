@@ -29,13 +29,21 @@ packages:
 
 write_files:
   - path: /home/ubuntu/site-content/index.html
+    permissions: '0666'
     content: |
-      Public IP Address: $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
-      Private IP Address: $(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
-    owner: 'ubuntu:ubuntu'
-    permissions: '0644'
+      This is my website:
+  - path: /home/ubuntu/content.sh
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+
+      public_ip=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+      private_ip=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+      echo "Public IP Address: $public_ip" >> /home/ubuntu/site-content/index.html
+      echo "Private IP Address: $private_ip" >> /home/ubuntu/site-content/index.html
 
 runcmd:
+  - /home/ubuntu/content.sh
   - usermod -G docker -a ubuntu
   - docker pull nginx:latest
   - docker run -it --rm -d -p 80:80 --name web -v /home/ubuntu/site-content:/usr/share/nginx/html nginx

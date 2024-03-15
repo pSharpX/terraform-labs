@@ -27,12 +27,26 @@ packages:
   - docker-buildx-plugin
   - docker-compose-plugin
 
+write_files:
+  - path: /home/ubuntu/site-content/index.html
+    permissions: '0666'
+    content: |
+      This is my website:
+  - path: /home/ubuntu/content.sh
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+
+      public_ip=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+      private_ip=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+      echo "Public IP Address: $public_ip" >> /home/ubuntu/site-content/index.html
+      echo "Private IP Address: $private_ip" >> /home/ubuntu/site-content/index.html
+
 runcmd:
+  - /home/ubuntu/content.sh
   - usermod -G docker -a ubuntu
-  - mkdir ~/site-content
-  - ifconfig | awk '/inet /{print $2}' > ~/site-content/index.html
   - docker pull nginx:latest
-  - docker run -it --rm -d -p 80:80 --name web -v ~/site-content:/usr/share/nginx/html nginx
+  - docker run -it --rm -d -p 80:80 --name web -v /home/ubuntu/site-content:/usr/share/nginx/html nginx
 
 final_message: |
   cloud-init has finished

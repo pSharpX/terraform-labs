@@ -44,7 +44,10 @@ ansible_installation(){
 
 application_startup() {
   sudo mkdir /home/ubuntu/site-content
-  sudo ifconfig | awk '/inet /{print $2}' > /home/ubuntu/site-content/index.html
+  public_ip=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+  private_ip=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
+  echo "Public IP Address: $public_ip" >> /home/ubuntu/site-content/index.html
+  echo "Private IP Address: $private_ip" >> /home/ubuntu/site-content/index.html
   sudo docker pull nginx:latest
   sudo docker run -it --rm -d -p 80:80 --name web -v /home/ubuntu/site-content:/usr/share/nginx/html nginx
 }

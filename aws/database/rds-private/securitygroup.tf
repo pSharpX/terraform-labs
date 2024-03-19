@@ -8,12 +8,12 @@ resource "aws_security_group" "database-sg" {
 
 resource "aws_security_group_rule" "allow-database-egress-rule" {
     type = "egress"
+    security_group_id = aws_security_group.database-sg.id
     description = "Allow all outbound traffic"
     to_port = 0
     from_port = 0
     protocol = "-1"
     cidr_blocks = [ "0.0.0.0/0" ]
-    security_group_id = aws_security_group.database-sg.id
 }
 
 resource "aws_security_group_rule" "allow-backend-ingress-rule" {
@@ -44,7 +44,7 @@ resource "aws_security_group_rule" "allow-all" {
 }
 
 resource "aws_security_group_rule" "allow-database-egress" {
-    type = "ingress"
+    type = "egress"
     security_group_id = aws_security_group.backend-sg.id
     description = "Allow all outbound traffic"
     to_port = 0

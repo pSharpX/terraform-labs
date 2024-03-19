@@ -5,7 +5,6 @@
 required_packages_installation(){
   echo ">>>>>>>>>> Install some additional packages required to run Docker/Ansible on your system"
   sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
-
 }
 
 docker_installation(){

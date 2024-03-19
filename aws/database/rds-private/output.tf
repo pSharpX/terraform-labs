@@ -1,4 +1,4 @@
-output "db-host" {
+output "db-endpoint" {
     value = aws_db_instance.onebank-database.endpoint
 }
 
@@ -16,7 +16,7 @@ output "db-password" {
 }
 
 output "psql-cli" {
-    value = "psql -h ${aws_db_instance.onebank-database.endpoint} -d ${aws_db_instance.onebank-database.db_name} -U ${aws_db_instance.onebank-database.username} -W"
+    value = "psql -h ${aws_db_instance.onebank-database.address} -p ${aws_db_instance.onebank-database.port} -d ${aws_db_instance.onebank-database.db_name} -U ${aws_db_instance.onebank-database.username} -W"
 }
 
 output "connection-string" {

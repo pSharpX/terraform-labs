@@ -82,6 +82,11 @@ variable "PATH_TO_PRIVATE_KEY" {
     default = "./ssh/ec2-keypair"
 }
 
+variable "PATH_TO_USER_DATA" {
+    type = string
+    default = "./config/ubuntu_provisioner.sh"
+}
+
 variable "DB_ENGINE" {
     type = string
     default = "postgres"

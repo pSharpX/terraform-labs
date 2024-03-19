@@ -3,5 +3,5 @@ output "instance-ip" {
 }
 
 output "instance-ssh" {
-    value = "ssh -i ${var.PATH_TO_PRIVATE_KEY} ubuntu@${aws_instance.aforo255-instance.public_ip}"
+    value = "ssh -i ${var.PATH_TO_PRIVATE_KEY} ${local.user}@${aws_instance.aforo255-instance.public_ip}"
 }

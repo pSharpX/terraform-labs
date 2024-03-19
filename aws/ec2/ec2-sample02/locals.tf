@@ -15,9 +15,6 @@ locals {
         DataClassification = var.DATA_CLASSIFICATION
         Provisioner = var.PROVISIONER
     }
-    amis_data = {
-        "ubuntu": data.aws_ami.ubuntu
-    }
     backend_tags = merge({Name = local.backend_name}, local.common_tags)
     database_tags = merge({Name = local.database_name}, local.common_tags)
     frontend_tags = merge({Name = local.frontend_name}, local.common_tags)

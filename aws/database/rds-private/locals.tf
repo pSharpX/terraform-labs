@@ -18,9 +18,6 @@ locals {
         "postgres" = 5432
         "sqlserver-se" = 1433
     }
-    amis_data = {
-        "ubuntu": data.aws_ami.ubuntu
-    }
     database_tags = merge({Name = local.database_name}, local.common_tags)
     secgroup_tags = merge({Name = local.sg_name}, local.common_tags)
     instance_tags = merge({Name = local.instance_name}, local.common_tags)

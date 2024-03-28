@@ -10,6 +10,11 @@ terraform destroy
 terraform destroy --auto-approve
 ````
 
+## Terraform CLI - Import resources
+````bash
+terraform plan -generate-config-out=generated_resources.tf
+````
+
 ## Tool for testing autoscaling features in EC2 instances
 ````bash
 apt-get install -y stress

@@ -85,7 +85,7 @@ resource "aws_elastic_beanstalk_environment" "onebank_development" {
     setting {
         namespace = "aws:elasticbeanstalk:environment:process:default"
         name = "HealthCheckPath"
-        value = "/products-management/actuator/health"
+        value = var.HEALTH_CHECK
     }
     setting {
         namespace = "aws:elasticbeanstalk:environment:process:default"
@@ -157,6 +157,5 @@ resource "aws_elastic_beanstalk_environment" "onebank_development" {
     }
 
     tags = local.common_tags
-    depends_on = [ aws_db_instance.onebank_database ]
 }
 

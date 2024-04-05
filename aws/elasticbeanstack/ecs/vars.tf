@@ -55,6 +55,11 @@ variable "VPC_ID" {
     description = "already provisioned vpc"
 }
 
+variable "DATABASE_SG_ID" {
+    type = string
+    description = "already provisioned database security group"
+}
+
 variable "PRIVATE_SUBNETS" {
     type = list(string)
     description = "list of subnets where rds instance will be located"
@@ -81,6 +86,12 @@ variable "IMAGE_NAME" {
     description = "Name of the docker image"
 }
 
+variable "DB_NAME" {
+    default = "onebankdb"
+    type = string
+    description = "default database name for application"
+}
+
 variable "DB_USERNAME" {
     default = "teamgoat"
     type = string
@@ -93,15 +104,9 @@ variable "DB_PASSWORD" {
     description = "Password to be set to the default user"
 }
 
-variable "DB_ENGINE" {
+variable "DB_HOSTNAME" {
     type = string
-    default = "postgres"
-    description = "Choosen DB Engine to be provisioned with RDS"
-
-    validation {
-      condition = contains(["mariadb", "mysql", "postgres", "sqlserver-se"], var.DB_ENGINE)
-      error_message = "Allowed values for DB_ENGINE are [mariadb, mysql, postgres, sqlserver-se]"
-    }
+    description = "Existent database hostname"
 }
 
 variable "APPLICATION_VARIABLES" {
@@ -109,7 +114,12 @@ variable "APPLICATION_VARIABLES" {
     default = {
         SPRING_PROFILES_ACTIVE = "dev"
         SERVER_PORT = "80"
-        SPRING_DATASOURCE_DRIVERCLASSNAME =  "org.postgresql.Driver"
     }
     description = "List of environment variables required for the application to run"
+}
+
+variable "HEALTH_CHECK" {
+    type = string
+    default = "/products-management/actuator/health"
+    description = "application url for performing healthCheck"
 }

@@ -2,6 +2,10 @@ data "aws_vpc"  "onebank_vpc"{
     id = var.VPC_ID
 }
 
+data "aws_security_group" "database_sg" {
+    id = var.DATABASE_SG_ID
+}
+
 data "aws_subnet" "main_public_1" {
     id = element(var.PUBLIC_SUBNETS, 0)
 }
@@ -10,13 +14,20 @@ data "aws_subnet" "main_public_2" {
     id = element(var.PUBLIC_SUBNETS, 1)
 }
 
+data "aws_subnet" "main_public_3" {
+    id = element(var.PUBLIC_SUBNETS, 2)
+}
 
 data "aws_subnet" "main_private_1" {
-    id = element(var.PRIVATE_SUBNETS, 2)
+    id = element(var.PRIVATE_SUBNETS, 0)
 }
 
 data "aws_subnet" "main_private_2" {
-    id = element(var.PRIVATE_SUBNETS, 3)
+    id = element(var.PRIVATE_SUBNETS, 1)
+}
+
+data "aws_subnet" "main_private_3" {
+    id = element(var.PRIVATE_SUBNETS, 2)
 }
 
 data "aws_iam_policy" "AWSElasticBeanstalkWebTier" {
@@ -54,7 +65,7 @@ data "aws_elastic_beanstalk_solution_stack" "docker" {
 
 data "aws_elastic_beanstalk_solution_stack" "ecs" {
     most_recent = true
-    name_regex = "^64bit Amazon Linux (.*) running ECS$"
+    name_regex = "^64bit Amazon Linux 2023 (.*) running ECS$"
 }
 
 data "aws_elastic_beanstalk_solution_stack" "java" {
@@ -80,9 +91,4 @@ data "aws_elastic_beanstalk_solution_stack" "dotnet_windows" {
 data "aws_elastic_beanstalk_solution_stack" "node" {
     most_recent = true
     name_regex = "^64bit Amazon Linux (.*) running Node.js (.*)$"
-}
-
-data "aws_rds_engine_version" "db_engine" {
-    engine = var.DB_ENGINE
-    default_only = true
 }

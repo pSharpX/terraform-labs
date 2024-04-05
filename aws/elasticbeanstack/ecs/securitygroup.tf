@@ -23,7 +23,17 @@ resource "aws_security_group_rule" "allow_database_egress" {
     to_port = 0
     from_port = 0
     protocol = "-1"
-    source_security_group_id = aws_security_group.database_sg.id
+    source_security_group_id = data.aws_security_group.database_sg.id
+}
+
+resource "aws_security_group_rule" "allow-backend-ingress-rule" {
+    type = "ingress"
+    security_group_id = data.aws_security_group.database_sg.id
+    description = "Allow ingress traffic from Backend Instance"
+    source_security_group_id = aws_security_group.application_sg.id
+    to_port = 0
+    from_port = 0
+    protocol = "-1"
 }
 
 resource "aws_security_group_rule" "allow_alb_ingress" {
@@ -54,33 +64,6 @@ resource "aws_security_group_rule" "allow_ssh_ipv4" {
     to_port = 22
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-}
-
-resource "aws_security_group" "database_sg" {
-    vpc_id = data.aws_vpc.onebank_vpc.id
-    name = local.database_sg_name
-    description = "Rules for configuring inbound/outbound traffic for database"
-    tags = local.database_sg_tags
-}
-
-resource "aws_security_group_rule" "allow_database_egress_rule" {
-    type = "egress"
-    security_group_id = aws_security_group.database_sg.id
-    description = "Allow all outbound traffic"
-    to_port = 0
-    from_port = 0
-    protocol = "-1"
-    cidr_blocks = [ "0.0.0.0/0" ]
-}
-
-resource "aws_security_group_rule" "allow_backend_ingress_rule" {
-    type = "ingress"
-    security_group_id = aws_security_group.database_sg.id
-    description = "Allow ingress traffic comming from application Instances"
-    source_security_group_id = aws_security_group.application_sg.id
-    to_port = 0
-    from_port = 0
-    protocol = "-1"
 }
 
 resource "aws_security_group" "loadbalancer_sg" {

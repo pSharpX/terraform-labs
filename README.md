@@ -94,7 +94,66 @@ gcloud config configurations delete my-third-configuration
 ### *List compute images available in Google Cloud Platform*
 ````bash
 gcloud compute images list --sort-by=PROJECT
+gcloud compute images list --filter="name:ubuntu-pro-fips-1804-bionic-v20240411"
+gcloud compute images list --filter="name=ubuntu-pro-fips-1804-bionic-v20240411"
+gcloud compute images list --filter="PROJECT:(windows-cloud,ubuntu-os-cloud)"
+gcloud compute images list --filter="name ~ debian.*"
+gcloud compute images list --filter="name ~ debian.*" --uri
+gcloud compute images list --filter="name ~ ubuntu.*"
+gcloud compute images list --filter="family ~ ubuntu-pro.*"
+gcloud compute images list --filter="family ~ fedora-cloud.*"
+gcloud compute images list --filter="name ~ ubuntu.*-v202404.*"
+gcloud compute images list --filter="name ~ ubuntu.*-v202403.*"
+gcloud compute images list --filter="name ~ ubuntu.*-amd64.*"
+gcloud compute images list --filter="name ~ ubuntu.* AND NOT name ~ .*arm64.*"
+gcloud compute images list --filter="creationTimestamp > -P1Y"
+gcloud compute images list --filter="creationTimestamp > -P1Y" --uri
+gcloud compute images list --filter="name ~ ubuntu.* AND creationTimestamp > -P1Y"
+gcloud compute images list --filter="name ~ ubuntu.* AND creationTimestamp > -P1Y" --uri
+gcloud compute images list --filter="name ~ ubuntu.*" --format="value(name,creationTimestamp)"
+gcloud compute images list --filter="name ~ ubuntu.*" --format="value(name,creationTimestamp,uri(selfLink))"
+gcloud compute images list --filter="name ~ ubuntu.*" --format="value(name, creationTimestamp, uri(selflink))"
+gcloud compute images list --filter="name ~ ubuntu.*" --sort-by=creationTimestamp --format="value(name,creationTimestamp)"
+gcloud compute images list --filter="name ~ ubuntu.* AND NOT name ~ .*arm64.*" --sort-by=~creationTimestamp --format="value(name, creationTimestamp)"
+gcloud compute images list --filter="name ~ ubuntu.* AND NOT name ~ .*arm64.*" --sort-by=creationTimestamp --format="value(name, creationTimestamp)"
+gcloud compute images list --filter="name ~ ubuntu.*" --sort-by=creationTimestamp --format="value(name, creationTimestamp)"
+gcloud compute images list --filter="name ~ ubuntu.*" --sort-by=~creationTimestamp --format="value(name, creationTimestamp)"
+
+gcloud compute images describe NAME|URI
+gcloud compute images describe NAME|URI
+gcloud compute images describe https://www.googleapis.com/compute/v1/projects/fedora-cloud/global/images/fedora-cloud-base-gcp-34-1-2-x86-64
 ````
+### Describe image response example
+```
+archiveSizeBytes: '718809600'
+creationTimestamp: '2021-05-06T09:33:30.114-07:00'
+description: Fedora, Fedora Cloud Base 34, v34.20210423.0, x86_64 published on 2021-04-27
+diskSizeGb: '10'
+family: fedora-cloud-34
+guestOsFeatures:
+- type: UEFI_COMPATIBLE
+- type: VIRTIO_SCSI_MULTIQUEUE
+id: '2751620519915267254'
+kind: compute#image
+labelFingerprint: 42WmSpB8rSM=
+licenseCodes:
+- '1002001'
+- '2706998670158047507'
+licenses:
+- https://www.googleapis.com/compute/v1/projects/vm-options/global/licenses/enable-vmx
+- https://www.googleapis.com/compute/v1/projects/fedora-cloud/global/licenses/fedora-34-cloud-base
+name: fedora-cloud-base-gcp-34-1-2-x86-64
+rawDisk:
+  containerType: TAR
+  source: ''
+selfLink: https://www.googleapis.com/compute/v1/projects/fedora-cloud/global/images/fedora-cloud-base-gcp-34-1-2-x86-64
+sourceType: RAW
+status: READY
+storageLocations:
+- us
+- eu
+- asia
+```
 
 ### *List machine types available in Google Cloud Platform*
 ````bash
@@ -112,7 +171,10 @@ gcloud compute machine-types list --filter="description ~ .*High-memory.*"
 
 # gcloud compute machine-types describe NAME
 gcloud compute machine-types describe n1-standard-1
-# Results
+````
+
+### *Results with all possible fields/properties*
+```
 creationTimestamp: '1969-12-31T16:00:00.000-08:00'
 description: 1 vCPU, 3.75 GB RAM
 guestCpus: 1
@@ -126,30 +188,74 @@ memoryMb: 3840
 name: n1-standard-1
 selfLink: https://www.googleapis.com/compute/v1/projects/aforo255-387602/zones/us-central1-a/machineTypes/n1-standard-1
 zone: us-central1-a
-````
+```
 
-### *Playing with Compute services*
-#### *Compute Engine*
+### *Playing with Compute Engine service*
+#### *Manage Instances*
 ````bash
 gcloud compute instances list
 gcloud compute instances create
 gcloud compute instances create my-first-instance-from-gcloud
+gcloud compute instances create my-first-instance-from-gcloud \
+    --machine-type=e2-standard-2 \
+    --source-instance-template= \
+    --custom-cpu=4 \
+    --custom-memory=4096 \
+    --custom-vm-type=n2 \
+    --image=debian \
+    --zone=us-central1-a \
+    --tags= \
+    --preemptible \
+    --restart-on-failure \
+    --maintenance-policy=MIGRATE \
+    --metadata-from-file= \
+    --
+
 gcloud compute instances describe my-first-instance-from-gcloud
 gcloud compute instances delete my-first-instance-from-gcloud
+gclout compute instances stop my-first-instance-from-gcloud
+gclout compute instances start my-first-instance-from-gcloud
+gclout compute instances move my-first-instance-from-gcloud --zone us-central1-b --zone us-central1-c
+
 gcloud compute zones list
+gcloud compute zones list --uri
 gcloud compute regions list
-gcloud compute machine-types list
- 
-gcloud compute machine-types list --filter zone:asia-southeast2-b
-gcloud compute machine-types list --filter "zone:(asia-southeast2-b asia-southeast2-c)"
+gcloud compute regions list --uri
 gcloud compute zones list --filter=region:us-west2
 gcloud compute zones list --sort-by=region
 gcloud compute zones list --sort-by=~region
 gcloud compute zones list --uri
 gcloud compute regions describe us-west4
- 
+
+gcloud compute disk-types list
+gcloud compute disks list
+gcloud compute snapshots list
+````
+
+#### *Manage Instance Templates*
+````bash
 gcloud compute instance-templates list
 gcloud compute instance-templates create instance-template-from-command-line
 gcloud compute instance-templates delete instance-template-from-command-line
 gcloud compute instance-templates describe my-instance-template-with-custom-image
 ````
+
+#### *Configure default REGION/ZONE in Compute Instances*
+
+**Options**
+1. Centralized configuration:
+````bash
+gcloud compute project-info add-metadata \
+    --metadata[google-compute-default-region=REGION|google-compute-default-zone=ZONE]
+````
+2. Local gcloud configuration
+````bash
+gcloud config set compute/region REGION
+gcloud config set compute/zone ZONE
+````
+3. Command specific
+````bash
+--zone or
+--region in the command
+````
+> **PRIORITY** Option 3 (if exists) overrides Option 2 (if exists) overrides Option 1

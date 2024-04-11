@@ -96,6 +96,38 @@ gcloud config configurations delete my-third-configuration
 gcloud compute images list --sort-by=PROJECT
 ````
 
+### *List machine types available in Google Cloud Platform*
+````bash
+gcloud compute machine-types list --sort-by=PROJECT
+gcloud compute machine-types list --filter zone:us-central1-a
+gcloud compute machine-types list --filter="zone:( us-central1-b europe-west1-d )"
+gcloud compute machine-types list --filter="name ~ n1-standard.*"
+gcloud compute machine-types list --filter="name ~ n1-standard.* AND zone:us-central1-a"
+gcloud compute machine-types list --filter="guestCpus = 4"
+gcloud compute machine-types list --filter="guestCpus = 2 AND zone ~ us-central1.*"
+gcloud compute machine-types list --filter="zone~us-west.*"
+gcloud compute machine-types list --filter="memoryMb >= 8192"
+gcloud compute machine-types list --filter="guestCpus >= 2 AND guestCpus <= 4 AND memoryMb >= 8192"
+gcloud compute machine-types list --filter="description ~ .*High-memory.*"
+
+# gcloud compute machine-types describe NAME
+gcloud compute machine-types describe n1-standard-1
+# Results
+creationTimestamp: '1969-12-31T16:00:00.000-08:00'
+description: 1 vCPU, 3.75 GB RAM
+guestCpus: 1
+id: '3001'
+imageSpaceGb: 10
+isSharedCpu: false
+kind: compute#machineType
+maximumPersistentDisks: 128
+maximumPersistentDisksSizeGb: '263168'
+memoryMb: 3840
+name: n1-standard-1
+selfLink: https://www.googleapis.com/compute/v1/projects/aforo255-387602/zones/us-central1-a/machineTypes/n1-standard-1
+zone: us-central1-a
+````
+
 ### *Playing with Compute services*
 #### *Compute Engine*
 ````bash

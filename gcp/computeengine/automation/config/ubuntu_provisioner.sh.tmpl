@@ -43,10 +43,10 @@ ansible_installation(){
 }
 
 application_startup() {
-  sudo mkdir /home/ubuntu/site-content
-  echo "Hellow world from NGINX !" >> /home/ubuntu/site-content/index.html
+  sudo mkdir /home/${USERNAME}/site-content
+  echo "Hellow world from NGINX !" >> /home/${USERNAME}/site-content/index.html
   sudo docker pull nginx:latest
-  sudo docker run -it --rm -d -p 80:80 --name web -v /home/ubuntu/site-content:/usr/share/nginx/html nginx
+  sudo docker run -it --rm -d -p 80:80 --name web -v /home/${USERNAME}/site-content:/usr/share/nginx/html nginx
 }
 
 PROVISIONED_ON=/etc/vm_provision_on_timestamp

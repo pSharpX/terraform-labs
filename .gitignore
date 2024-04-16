@@ -42,3 +42,4 @@ terraform.rc
 /terraform-course
 generated_resources.tf*
 **/ssh/*
+Dockerrun.aws.zip

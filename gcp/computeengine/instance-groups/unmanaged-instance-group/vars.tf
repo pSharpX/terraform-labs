@@ -56,39 +56,6 @@ variable "DATA_CLASSIFICATION" {
     description = "A classification for the type of data managed by resources"
 }
 
-variable "INSTANCE_COUNT" {
-    type = number
-    default = 2
-    description = "The number of instance to be created"
-
-    validation {
-      condition = var.INSTANCE_COUNT >= 1 && var.INSTANCE_COUNT <= 10
-      error_message = "INSTANCE_COUNT must be a positive number and lower or equal to 10"
-    }
-}
-
-variable "MAX_REPLICAS" {
-    type = number
-    default = 4
-    description = "The maximum number of instance to be created when scaled up"
-
-    validation {
-      condition = var.MAX_REPLICAS <= 10
-      error_message = "MAX_REPLICAS must be a positive number and greater or equal to INSTANCE_COUNT"
-    }
-}
-
-variable "MIN_REPLICAS" {
-    type = number
-    default = 1
-    description = "The minimum number of instance to be deleted when scaled down"
-
-    validation {
-      condition = var.MIN_REPLICAS >= 1
-      error_message = "MIN_REPLICAS must be a positive number and lower or equal to INSTANCE_COUNT"
-    }
-}
-
 variable "PROVISIONER_SCRIPT_PATHS" {
     type = map(string)
     default = {

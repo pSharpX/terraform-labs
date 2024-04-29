@@ -259,3 +259,23 @@ gcloud config set compute/zone ZONE
 --region in the command
 ````
 > **PRIORITY** Option 3 (if exists) overrides Option 2 (if exists) overrides Option 1
+
+#### *Managed Instances Groups*
+````bash
+gcloud compute instance-groups managed list
+gcloud compute instance-groups managed describe my-managed-instance-group
+gcloud compute instance-groups managed delete my-managed-instance-group
+gcloud compute instance-groups managed delete my-managed-instance-group --region=us-central1
+gcloud compute instance-groups managed create my-mig --zone us-central1-a --template my-instance-template-with-custom-image --size 1
+gcloud compute instance-groups managed set-autoscaling my-mig --max-num-replicas=2 --zone us-central1-a --cool-down-period=60s --min-num-replicas=1 --mode=on
+gcloud compute instance-groups managed stop-autoscaling my-mig --zone us-central1-a
+## Resize the Group
+gcloud compute instance-groups managed resize my-mig --size=1 --zone=us-central1-a
+## Recreate one or more instances
+gcloud compute instance-groups managed recreate-instances my-mig --instances=my-mig-85fb --zone us-central1-a
+## Update specific instances
+gcloud compute instance-groups managed update-instances my-mig --instances=my-instance--3,my-instance-4 --minimal-action=none(default)/refresh/replace/restart \
+--most-disruptive-allowed-action=none(default)/refresh/replace/restart
+## Update instance templates
+gcloud compute instance-groups managed set-instance-template my-mig --template=v2-template
+````

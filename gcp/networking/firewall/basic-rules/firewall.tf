@@ -6,7 +6,7 @@ resource "google_compute_firewall" "allow_icmp" {
     description = "Allow ICMP for network connectivty validation"
     direction = "INGRESS"
     priority = 65534
-    source_ranges = [ "0.0.0.0/0" ]
+    source_ranges = [ "0.0.0.0/0" ] ## Allow inbound traffic from anywhere
     disabled = false
 
     allow {
@@ -20,7 +20,7 @@ resource "google_compute_firewall" "allow_ssh" {
     description = "Allow SSH inbound traffic to instance in the default network"
     direction = "INGRESS"
     priority = 65534
-    source_ranges = [ "0.0.0.0/0" ]
+    source_ranges = [ "0.0.0.0/0" ] ## Allow inbound traffic from anywhere
     disabled = false
 
     allow {
@@ -35,31 +35,11 @@ resource "google_compute_firewall" "allow_rdp" {
     description = "Allow RDP inbound traffic to instance in the default network"
     direction = "INGRESS"
     priority = 65534
-    source_ranges = [ "0.0.0.0/0" ]
+    source_ranges = [ "0.0.0.0/0" ] ## Allow inbound traffic from anywhere
     disabled = false
 
     allow {
         protocol = "tcp"
         ports = ["3389"]
-    }
-}
-
-resource "google_compute_firewall" "allow_internal" {
-    name = "${local.applicationId}-allow-internal"
-    network = data.google_compute_network.default.name
-    description = "Allow Internal traffic on the default network"
-    direction = "INGRESS"
-    priority = 65534
-    source_ranges = [ "0.0.0.0/0" ]
-    disabled = false
-
-    allow {
-        protocol = "tcp"
-        ports = ["0-65535"]
-    }
-
-    allow {
-        protocol = "udp"
-        ports = ["0-65535"]
     }
 }

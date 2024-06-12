@@ -47,7 +47,8 @@ application_metadata() {
   NAME=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/hostname")
   IP=$(curl -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip")
 
-  cat <<EOF > /var/www/html/index.html
+  sudo mkdir /opt/site-content
+  cat <<EOF > /opt/site-content/index.html
 <pre>
 Name: $NAME
 IP: $IP
@@ -57,7 +58,7 @@ EOF
 
 application_startup() {
   sudo docker pull nginx:latest
-  sudo docker run -it --rm -d -p 80:80 --name web nginx
+  sudo docker run -it --rm -d -p 80:80 --name web -v /opt/site-content:/usr/share/nginx/html nginx
 }
 
 PROVISIONED_ON=/etc/vm_provision_on_timestamp
@@ -80,6 +81,9 @@ docker_installation
 
 # Ansible Installation
 ansible_installation
+
+# Collect application metadata
+application_metadata
 
 # Application Startup
 application_startup

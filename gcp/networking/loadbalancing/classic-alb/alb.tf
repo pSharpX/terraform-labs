@@ -23,19 +23,19 @@ resource "google_compute_url_map" "backend_map" {
             service = google_compute_backend_service.backend_1.id
         }
 
-        # path_rule {
-        #     paths = [ "/backend-two/*" ]
-        #     service = google_compute_backend_service.backend_2.id
-        # }
+        path_rule {
+            paths = [ "/backend-two/*" ]
+            service = google_compute_backend_service.backend_2.id
+        }
 
-        # path_rule {
-        #     paths = [ "/backend-three/*" ]
-        #     service = google_compute_backend_service.backend_3.id
-        # }
+        path_rule {
+            paths = [ "/backend-three/*" ]
+            service = google_compute_backend_service.backend_3.id
+        }
 
         path_rule {
             paths = [ "/*" ]
-            service = google_compute_backend_service.backend_1.id
+            service = google_compute_backend_service.backend_2.id
         }
     }
 

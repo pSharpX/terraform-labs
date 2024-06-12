@@ -35,16 +35,45 @@ resource "google_compute_subnetwork" "main_private_1" {
     private_ip_google_access = true
 }
 
-resource "google_compute_router" "main_private_router" {
-    name = "main-private-router"
+resource "google_compute_subnetwork" "main_private_2" {
+    name = "main-private-2"
+    description = "Main Private 2 Subnetwork for Onebank Resources"
+    ip_cidr_range = "10.0.5.0/24"
+    network = google_compute_network.onebank_network.id
+    region = "us-south1"
+    stack_type = "IPV4_ONLY"
+    private_ip_google_access = true
+}
+
+resource "google_compute_router" "main_private_router_1" {
+    name = "main-private-router-1"
     region = google_compute_subnetwork.main_private_1.region
     network = google_compute_network.onebank_network.id
 }
 
-resource "google_compute_router_nat" "main_private_router_nat" {
-    name = "main-private-router-nat"
-    router = google_compute_router.main_private_router.name
-    region = google_compute_router.main_private_router.region
+resource "google_compute_router" "main_private_router_2" {
+    name = "main-private-router-2"
+    region = google_compute_subnetwork.main_private_2.region
+    network = google_compute_network.onebank_network.id
+}
+
+resource "google_compute_router_nat" "main_private_router_nat_1" {
+    name = "main-private-router-nat-1"
+    router = google_compute_router.main_private_router_1.name
+    region = google_compute_router.main_private_router_1.region
+    nat_ip_allocate_option = "AUTO_ONLY"
+    source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
+
+    log_config {
+        enable = true
+        filter = "ALL" ## ERRORS_ONLY
+    }
+}
+
+resource "google_compute_router_nat" "main_private_router_nat_2" {
+    name = "main-private-router-nat-2"
+    router = google_compute_router.main_private_router_2.name
+    region = google_compute_router.main_private_router_2.region
     nat_ip_allocate_option = "AUTO_ONLY"
     source_subnetwork_ip_ranges_to_nat = "ALL_SUBNETWORKS_ALL_IP_RANGES"
 

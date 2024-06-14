@@ -278,4 +278,27 @@ gcloud compute instance-groups managed update-instances my-mig --instances=my-in
 --most-disruptive-allowed-action=none(default)/refresh/replace/restart
 ## Update instance templates
 gcloud compute instance-groups managed set-instance-template my-mig --template=v2-template
+## Rolling Actions
+### Scenario: You want to manage your new release - v1 to v2 - without downtime
+gcloud compute instance-groups managed rolling-action
+## -> Restart (stop & start)
+## --max-surge=max n° of instances updated at a time
+gcloud compute instance-groups managed rolling-action restart my-mig \
+--max-surge=5 or 10% #(max n° of instances updated at a time)
+## -> Replace (delete & recreate)
+## --max-surge=max n° of instances updated at a time
+## --max-unavailable=max n° of instances that can be down for the update
+## --replacement-method=substitute(default) creates instances with new names. recreate reuse names
+gcloud compute instance-groups managed rolling-action replace my-mig \
+--max-surge=5 or 10% \
+--max-unavailable=5 or 10% \
+--replacement-method=recreate/substitute
+## -> Updates instance to a new template 
+## Basic version= updates all instances slowly step by step
+gcloud compute instace-groups managed rolling-action start-update my-mig \
+--version=template=v1-template
+gcloud compute instance-groups managed rolling-action start-update my-mig \
+--version=template=v1-template \
+--canary-version=template=v2-template,target-size=10%
+## Canary version
 ````

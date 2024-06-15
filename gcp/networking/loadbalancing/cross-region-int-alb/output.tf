@@ -2,9 +2,9 @@ output "mig_1" {
     value = google_compute_region_instance_group_manager.onebank_instance_group_1.self_link
 }
 
-# output "mig_2" {
-#     value = google_compute_region_instance_group_manager.onebank_instance_group_2.self_link
-# }
+output "mig_2" {
+    value = google_compute_region_instance_group_manager.onebank_instance_group_2.self_link
+}
 
 output "mig_3" {
     value = google_compute_region_instance_group_manager.onebank_instance_group_3.self_link

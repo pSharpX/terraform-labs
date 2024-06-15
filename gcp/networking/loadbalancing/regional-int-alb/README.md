@@ -1,0 +1,1 @@
+## [Regional internal Application Load Balancer with a MIG backend](https://cloud.google.com/load-balancing/docs/l7-internal/int-https-lb-tf-examples)

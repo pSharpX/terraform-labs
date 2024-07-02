@@ -5,7 +5,7 @@ resource "google_app_engine_flexible_app_version" "onebank_app_v1" {
     runtime = "custom"
     instance_class = "F4" # AutomaticScaling: F1, F2, F4, F4_1G ManualScaling: B1, B2, B4, B8, B4_1G Defaults to F1 for AutomaticScaling and B1 for ManualScaling.
     serving_status = "SERVING" #"STOPPED"
-
+    
     deployment {
         container {
             image = "us-central1-docker.pkg.dev/onebank-427217/onebank-test-gar/controlplane:latest"
@@ -44,7 +44,7 @@ resource "google_app_engine_flexible_app_version" "onebank_app_v1" {
         }
     }
 
-    noop_on_destroy = false
+    noop_on_destroy = true
     service_account = google_service_account.taskmaster_sa.email
     depends_on = [ 
         google_project_iam_member.gae_api,

@@ -43,3 +43,7 @@ terraform.rc
 generated_resources.tf*
 **/ssh/*
 Dockerrun.aws.zip
+
+*-sa.json
+credential.json
+kubeconfig.yaml

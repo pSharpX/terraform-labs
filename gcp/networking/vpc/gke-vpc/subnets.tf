@@ -19,7 +19,7 @@ resource "google_compute_subnetwork" "main_public_2" {
 resource "google_compute_subnetwork" "main_public_3" {
     name = "main-public-3"
     description = "Main Public 3 Subnetwork for Onebank Resources"
-    ip_cidr_range = "10.0.3.0/24"
+    ip_cidr_range = "10.3.0.0/16"
     network = google_compute_network.onebank_network.id
     region = "us-east1"
     stack_type = "IPV4_ONLY"
@@ -28,7 +28,7 @@ resource "google_compute_subnetwork" "main_public_3" {
 resource "google_compute_subnetwork" "main_private_1" {
     name = "main-private-1"
     description = "Main Private Subnetwork for Onebank Resources"
-    ip_cidr_range = "10.1.0.0/16"
+    ip_cidr_range = "10.4.0.0/16"
     network = google_compute_network.onebank_network.id
     region = "us-west1"
     stack_type = "IPV4_ONLY"
@@ -47,7 +47,7 @@ resource "google_compute_subnetwork" "main_private_1" {
 resource "google_compute_subnetwork" "main_private_2" {
     name = "main-private-2"
     description = "Main Private 2 Subnetwork for Onebank Resources"
-    ip_cidr_range = "10.2.0.0/16"
+    ip_cidr_range = "10.5.0.0/16"
     network = google_compute_network.onebank_network.id
     region = "us-south1"
     stack_type = "IPV4_ONLY"
@@ -66,7 +66,7 @@ resource "google_compute_subnetwork" "main_private_2" {
 resource "google_compute_subnetwork" "main_private_3" {
     name = "main-private-3"
     description = "Main Private 3 Subnetwork for Onebank Resources"
-    ip_cidr_range = "10.0.4.0/24"
+    ip_cidr_range = "10.0.6.0/24"
     network = google_compute_network.onebank_network.id
     region = "us-west2"
     stack_type = "IPV4_ONLY"

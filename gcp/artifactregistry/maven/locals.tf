@@ -7,6 +7,8 @@ locals {
         "data-classification" = var.DATA_CLASSIFICATION
         "provisioner" = var.PROVISIONER
     }
-    maven_upstream = "${local.applicationId}-maven-upstream"
-    main_upstream = "${local.applicationId}-main-upstream"
+    repository_name = "${local.applicationId}-maven"
+    remote_upstream = "${local.applicationId}-remote-upstream"
+    snapshot_upstream = "${local.applicationId}-snapshot-upstream"
+    release_upstream = "${local.applicationId}-release-upstream"
 }

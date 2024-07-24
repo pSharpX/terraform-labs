@@ -1,0 +1,39 @@
+// Insert following snippet into your build.gradle
+// see docs.gradle.org/current/userguide/publishing_maven.html
+
+plugins {
+  id "maven-publish"
+}
+
+publishing {
+  publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+  repositories {
+    maven {
+      url "${artifactory_contextUrl}"
+			credentials {
+				username = "${artifactory_user}"
+				password = "${artifactory_password}"
+			}
+			authentication {
+				basic(BasicAuthentication)
+			}
+    }
+  }
+}
+
+repositories {
+  maven {
+    url "${artifactory_contextUrl}"
+    credentials {
+      username = "${artifactory_user}"
+      password = "${artifactory_password}"
+    }
+    authentication {
+      basic(BasicAuthentication)
+    }
+  }
+}

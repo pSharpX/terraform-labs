@@ -46,6 +46,9 @@ Dockerrun.aws.zip
 
 *-sa.json
 credential.json
+*.credential.json
+auth.json
+*.auth.json
 credential.sh
 *.credential.sh
 kubeconfig.yaml

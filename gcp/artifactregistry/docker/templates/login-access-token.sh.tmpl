@@ -1,0 +1,2 @@
+gcloud auth print-access-token --impersonate-service-account ACCOUNT | docker login -u ${user} --password-stdin https://${location}-docker.pkg.dev
+echo "${access_token}" | docker login -u ${user} --password-stdin https://${location}-docker.pkg.dev

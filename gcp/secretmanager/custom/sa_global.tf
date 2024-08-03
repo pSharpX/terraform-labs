@@ -8,7 +8,11 @@ resource "google_service_account" "global_secret_sa" {
 }
 
 # Roles
+# roles/secretmanager.admin
 # roles/secretmanager.secretAccessor
+# roles/secretmanager.secretVersionManager
+# roles/secretmanager.viewer
+# roles/secretmanager.secretVersionAdder
 
 resource "google_project_iam_member" "secret_accessor" {
     project = data.google_project.onebank.project_id

@@ -29,3 +29,11 @@ output "encryption_test_case" {
 output "decryption_test_case" {
   value = base64decode(jsondecode(data.http.decryption_test_case.response_body)["plaintext"])
 }
+
+output "get_public_key_test_case" {
+  value = jsondecode(data.http.get_public_key_test_case.response_body)["pem"]
+}
+
+output "decryption_asymmetric_key_test_case" {
+  value = base64decode(jsondecode(data.http.decryption_asymmetric_key_test_case.response_body)["plaintext"])
+}

@@ -1,3 +1,5 @@
+# https://cloud.google.com/kms/docs/reference/permissions-and-roles#resource_hierarchy
+
 resource "google_service_account" "key_specific_sa" {
     project = data.google_project.onebank.project_id
     account_id = "crypto-key-specific-sa"
@@ -11,6 +13,7 @@ resource "google_service_account" "key_specific_sa" {
 # roles/cloudkms.cryptoKeyEncrypter
 # roles/cloudkms.cryptoKeyDecrypter
 # roles/cloudkms.cryptoKeyEncrypterDecrypter
+# roles/cloudkms.publicKeyViewer
 
 resource "google_kms_crypto_key_iam_member" "key_specific_encrypter" {
     crypto_key_id = try(local.crypto_key_ref.id)
@@ -20,6 +23,18 @@ resource "google_kms_crypto_key_iam_member" "key_specific_encrypter" {
 
 resource "google_kms_crypto_key_iam_member" "key_specific_decrypter" {
     crypto_key_id = try(local.crypto_key_ref.id)
+    role = "roles/cloudkms.cryptoKeyDecrypter"
+    member = "serviceAccount:${google_service_account.key_specific_sa.email}"
+}
+
+resource "google_kms_crypto_key_iam_member" "asym_key_specific_publickey_viewer" {
+    crypto_key_id = try(local.asymmetric_crypto_key_ref.id)
+    role = "roles/cloudkms.publicKeyViewer"
+    member = "serviceAccount:${google_service_account.key_specific_sa.email}"
+}
+
+resource "google_kms_crypto_key_iam_member" "asym_key_specific_decrypter" {
+    crypto_key_id = try(local.asymmetric_crypto_key_ref.id)
     role = "roles/cloudkms.cryptoKeyDecrypter"
     member = "serviceAccount:${google_service_account.key_specific_sa.email}"
 }

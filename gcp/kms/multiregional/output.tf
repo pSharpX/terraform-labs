@@ -21,3 +21,11 @@ output "primary_version" {
 output "primary_version_state" {
     value = one(try(local.asymmetric_crypto_key_ref.primary[*].state))
 }
+
+output "encryption_test_case" {
+  value = jsondecode(data.http.encryption_test_case.response_body)["ciphertext"]
+}
+
+output "decryption_test_case" {
+  value = base64decode(jsondecode(data.http.decryption_test_case.response_body)["plaintext"])
+}

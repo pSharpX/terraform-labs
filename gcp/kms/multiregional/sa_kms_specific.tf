@@ -1,8 +1,8 @@
 resource "google_service_account" "kms_specific_sa" {
     project = data.google_project.onebank.project_id
     account_id = "kms-specific-sa"
-    display_name = "KMS Service Account"
-    description = "Service Account for Cloud KMS with resource-specific permissions"
+    display_name = "Resource-Level Service Account"
+    description = "Service Account with Resource-Level (KeyRing) Cloud KMS permission"
 }
 
 # Roles

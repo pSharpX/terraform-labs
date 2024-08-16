@@ -1,4 +1,18 @@
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance
+# https://cloud.google.com/sql/docs/postgres/admin-api/rest/v1beta4/instances#SslMode
+
+# SslMode
+#
+# ENCRYPTED_ONLY
+# Only allow connections encrypted with SSL/TLS. For SSL connections to MySQL and PostgreSQL, the client certificate isn't verified.
+# When this value is used, the legacy requireSsl flag must be false or cleared to avoid a conflict between the values of the two flags.
+#
+# TRUSTED_CLIENT_CERTIFICATE_REQUIRED
+# Only allow connections encrypted with SSL/TLS and with valid client certificates.
+# When this value is used, the legacy requireSsl flag must be true or cleared to avoid the conflict between values of two flags. PostgreSQL clients or users that connect using IAM database authentication must use either the Cloud SQL Auth Proxy or Cloud SQL Connectors to enforce client identity verification.
+# Only applicable to MySQL and PostgreSQL. Not applicable to SQL Server.
+#
+# # Default is ALLOW_UNENCRYPTED_AND_ENCRYPTED
 
 resource "google_sql_database_instance" "mysql" {
     name = "${local.instance_name}-mysql"
@@ -38,6 +52,8 @@ resource "google_sql_database_instance" "mysql" {
 
         ip_configuration {
             ipv4_enabled = true
+            require_ssl = true
+            ssl_mode = "TRUSTED_CLIENT_CERTIFICATE_REQUIRED"
             authorized_networks {
                 name = "allow_all_networks"
                 value = "0.0.0.0/0"

@@ -1,11 +1,13 @@
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance
+# https://cloud.google.com/sql/docs/db-versions
 
-resource "google_sql_database_instance" "postgres" {
-    name = "${local.instance_name}-postgres"
-    database_version = "POSTGRES_15"
+resource "google_sql_database_instance" "mssql" {
+    name = "${local.instance_name}-mssql"
+    database_version = "SQLSERVER_2022_STANDARD"
     region = var.REGION
     deletion_protection = false
     encryption_key_name = data.google_kms_crypto_key.default.id
+    root_password = var.DB_PASSWORD # Required to avoid issue "Root user's password is not policy compliant"
 
     settings {
         tier = "db-custom-4-8192"
@@ -23,6 +25,7 @@ resource "google_sql_database_instance" "postgres" {
         }
 
         backup_configuration {
+            start_time = "04:00"
             enabled = true
             point_in_time_recovery_enabled = true
             location = "us-east1"
@@ -49,10 +52,9 @@ resource "google_sql_database_instance" "postgres" {
         }
 
         password_validation_policy {
-            min_length = 8
+            min_length = 0
             complexity = "COMPLEXITY_DEFAULT"
             reuse_interval = 2
-            password_change_interval = "604800s"
             disallow_username_substring = true
             enable_password_policy = true
         }

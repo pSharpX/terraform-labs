@@ -51,7 +51,7 @@ resource "google_sql_database_instance" "mysql" {
         }
 
         password_validation_policy {
-            min_length = 0
+            min_length = 8
             complexity = "COMPLEXITY_DEFAULT"
             reuse_interval = 2
             disallow_username_substring = true

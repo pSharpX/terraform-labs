@@ -26,13 +26,18 @@ resource "google_project_iam_member" "instance_user_role" {
     member = "serviceAccount:${google_service_account.sql_sa.email}"
 
     # condition {
-    #     title = "myinstance"
-    #     expression = "resource.name == 'projects/PROJECT_ID/instances/myinstance' && resource.service == 'sqladmin.googleapis.com'"
+    #     title = "Onebank Cloud SQL Instance"
+    #     expression = "resource.name == 'projects/${data.google_project.onebank.project_id}/instances/myinstance' && resource.service == 'sqladmin.googleapis.com'"
     # }
 }
 
 resource "google_service_account_key" "sql_sa_key" {
     service_account_id = google_service_account.sql_sa.name
+
+    depends_on = [ 
+        google_project_iam_member.client_role,
+        google_project_iam_member.instance_user_role
+    ]
 }
 
 resource "local_file" "sql_sa_credentials_file" {

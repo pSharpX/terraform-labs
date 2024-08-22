@@ -1,10 +1,11 @@
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance
 
-resource "google_sql_database_instance" "db_instance" {
+resource "google_sql_database_instance" "instance_1" {
     name = local.instance_name
     database_version = "MYSQL_8_0"
     region = var.REGION
     deletion_protection = false
+    root_password = var.DB_PASSWORD
 
     settings {
         tier = "db-n1-standard-1"

@@ -20,7 +20,8 @@ resource "google_sql_user" "iam_sa_user" {
     # from the service account email due to length limits on database usernames.
     name = google_service_account.sql_sa.email
     instance = google_sql_database_instance.db_instance.name
-    host = "%"
+    #  For IAM users, password or hostname should not be specified., invalid
+    # host = "%"
     type = "CLOUD_IAM_SERVICE_ACCOUNT"
     # deletion_policy = "ABANDON"
 }

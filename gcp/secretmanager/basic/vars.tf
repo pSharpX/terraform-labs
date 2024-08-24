@@ -65,6 +65,7 @@ variable "DATA_CLASSIFICATION" {
 variable "DB_PASSWORD" {
     type = string
     description = "Password value for accessing Database"
+    sensitive = true
 }
 
 variable "APP_CONFIGURATIONS" {

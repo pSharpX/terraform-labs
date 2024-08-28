@@ -1,0 +1,12 @@
+spring:
+  profiles: "dev"
+  datasource:
+    url: >-
+         jdbc:mysql://localhost:3306/${database_name}?
+         sslMode=VERIFY_CA&
+         trustCertificateKeyStoreUrl=${trust_certificate_keystore_path}&
+         trustCertificateKeyStorePassword=${trust_certificate_keystore_pwd}&
+         clientCertificateKeyStoreUrl=${client_certificate_keystore_path}&
+         clientCertificateKeyStorePassword=${client_certificate_keystore_pwd}
+    username: ${db_user}
+    password: ${db_password}

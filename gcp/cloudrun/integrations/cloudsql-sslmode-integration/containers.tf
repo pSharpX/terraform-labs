@@ -145,7 +145,7 @@ resource "google_cloud_run_v2_service" "onebank_app" {
 
             volume_mounts {
                 name = "certificates_bucket"
-                mount_path = "/truststore"
+                mount_path = "/onebank_certificates"
             }
         }
 
@@ -160,7 +160,8 @@ resource "google_cloud_run_v2_service" "onebank_app" {
     depends_on = [ 
         google_sql_database_instance.onebank_instance,
         google_storage_bucket.default,
-        google_storage_bucket_object.truststore_dir
+        google_storage_bucket_object.trust_cert_keystore,
+        google_storage_bucket_object.client_cert_keystore
     ]
 }
 

@@ -74,23 +74,6 @@ resource "google_cloud_run_v2_service" "onebank_app" {
                 }
             }
 
-            # env {
-            #     name = "SPRING_PROFILES_ACTIVE"
-            #     value = "dev"
-            # }
-            # env {
-            #     name = "CONTROL_PLANE_DATABASE_ENABLED"
-            #     value = "true"
-            # }
-            # env {
-            #     name = "SPRING_DATASOURCE_DRIVER_CLASS_NAME"
-            #     value = "org.postgresql.Driver"
-            # }
-            # env {
-            #     name = "SPRING_JPA_HIBERNATE_DDL_AUTO"
-            #     value = "update"
-            # }
-
             env {
                 name = "SPRING_DATASOURCE_USERNAME"
                 value_source {
@@ -114,6 +97,42 @@ resource "google_cloud_run_v2_service" "onebank_app" {
                 value_source {
                     secret_key_ref {
                         secret = google_secret_manager_secret.datasource_url.secret_id
+                        version = "1"
+                    }
+                }
+            }
+            env {
+                name = "TRUSTSTORE"
+                value_source {
+                    secret_key_ref {
+                        secret = google_secret_manager_secret.trust_cert_keystore_path.secret_id
+                        version = "1"
+                    }
+                }
+            }
+            env {
+                name = "TRUSTSTORE_PASSWORD"
+                value_source {
+                    secret_key_ref {
+                        secret = google_secret_manager_secret.trust_cert_keystore_pwd.secret_id
+                        version = "1"
+                    }
+                }
+            }
+            env {
+                name = "KEYSTORE"
+                value_source {
+                    secret_key_ref {
+                        secret = google_secret_manager_secret.client_cert_keystore_path.secret_id
+                        version = "1"
+                    }
+                }
+            }
+            env {
+                name = "KEYSTORE_PASSWORD"
+                value_source {
+                    secret_key_ref {
+                        secret = google_secret_manager_secret.client_cert_keystore_pwd.secret_id
                         version = "1"
                     }
                 }

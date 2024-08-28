@@ -46,6 +46,34 @@ resource "google_secret_manager_secret_iam_member" "datasource_url_secret_permis
     member = "serviceAccount:${google_service_account.default.email}"
 }
 
+resource "google_secret_manager_secret_iam_member" "trust_cert_keystore_path_permission" {
+    project = data.google_project.onebank.project_id
+    secret_id = google_secret_manager_secret.trust_cert_keystore_path.id
+    role = "roles/secretmanager.secretAccessor"
+    member = "serviceAccount:${google_service_account.default.email}"
+}
+
+resource "google_secret_manager_secret_iam_member" "trust_cert_keystore_pwd_permission" {
+    project = data.google_project.onebank.project_id
+    secret_id = google_secret_manager_secret.trust_cert_keystore_pwd.id
+    role = "roles/secretmanager.secretAccessor"
+    member = "serviceAccount:${google_service_account.default.email}"
+}
+
+resource "google_secret_manager_secret_iam_member" "client_cert_keystore_path_permission" {
+    project = data.google_project.onebank.project_id
+    secret_id = google_secret_manager_secret.client_cert_keystore_path.id
+    role = "roles/secretmanager.secretAccessor"
+    member = "serviceAccount:${google_service_account.default.email}"
+}
+
+resource "google_secret_manager_secret_iam_member" "client_cert_keystore_pwd_permission" {
+    project = data.google_project.onebank.project_id
+    secret_id = google_secret_manager_secret.client_cert_keystore_pwd.id
+    role = "roles/secretmanager.secretAccessor"
+    member = "serviceAccount:${google_service_account.default.email}"
+}
+
 resource "google_project_iam_member" "sql_client_role" {
     project = data.google_project.onebank.project_id
     role = "roles/cloudsql.client"
@@ -56,11 +84,6 @@ resource "google_project_iam_member" "sql_instance_user_role" {
     project = data.google_project.onebank.project_id
     role = "roles/cloudsql.instanceUser"
     member = "serviceAccount:${google_service_account.default.email}"
-
-    # condition {
-    #     title = "Onebank Cloud SQL Instance"
-    #     expression = "resource.name == 'projects/${data.google_project.onebank.project_id}/instances/myinstance' && resource.service == 'sqladmin.googleapis.com'"
-    # }
 }
 
 resource "google_storage_bucket_iam_member" "object_viewer_role" {

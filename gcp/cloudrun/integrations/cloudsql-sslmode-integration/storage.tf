@@ -33,3 +33,33 @@ resource "google_storage_bucket_object" "truststore_dir" {
     bucket = google_storage_bucket.default.name
     content = " "
 }
+
+resource "google_storage_bucket_object" "trust_cert_keystore" {
+    name = "truststore/${var.TRUST_CERTIFICATE_KEYSTORE_FILE}"
+    bucket = google_storage_bucket.default.name
+    source = local.trust_certificate_keystore_local_path
+
+    lifecycle {
+        precondition {
+            condition = null_resource.create_trust_cert_keystore.id != null && fileexists(local.trust_certificate_keystore_local_path)
+            error_message = "trust keystore file was not found!"
+        }
+    }
+
+    depends_on = [ null_resource.create_trust_cert_keystore ]
+}
+
+resource "google_storage_bucket_object" "client_cert_keystore" {
+    name = "truststore/${var.CLIENT_CERTIFICATE_KEYSTORE_FILE}"
+    bucket = google_storage_bucket.default.name
+    source = local.client_certificate_keystore_local_path
+
+    lifecycle {
+        precondition {
+            condition = null_resource.import_client_cert_keystore.id != null && fileexists(local.client_certificate_keystore_local_path)
+            error_message = "client keystore file was not found!"
+        }
+    }
+
+    depends_on = [ null_resource.import_client_cert_keystore ]
+}

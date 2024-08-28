@@ -11,4 +11,9 @@ locals {
     control_plane = "${local.applicationId}-controlplane"
     control_plane_last_revision = "${local.control_plane}-v1"
     instance_name = "${local.applicationId}-db-instance"
+    trust_certificate_keystore_path = "file:/${google_storage_bucket_object.truststore_dir.name}${var.TRUST_CERTIFICATE_KEYSTORE_FILE}"
+    client_certificate_keystore_path = "file:/${google_storage_bucket_object.truststore_dir.name}${var.CLIENT_CERTIFICATE_KEYSTORE_FILE}"
+    trust_certificate_keystore_local_path = "./configs/${var.TRUST_CERTIFICATE_KEYSTORE_FILE}"
+    client_certificate_keystore_local_path = "./configs/${var.CLIENT_CERTIFICATE_KEYSTORE_FILE}"
+    p12_local_file = "./configs/certificate.p12"
  }

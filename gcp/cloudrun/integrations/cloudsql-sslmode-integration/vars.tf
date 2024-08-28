@@ -121,3 +121,29 @@ variable "CERT_FILENAME" {
     description = "client-cert"
     default = "client-cert.pem"
 }
+
+variable "TRUST_CERTIFICATE_KEYSTORE_FILE" {
+    type = string
+    default = "truststore.jks"
+    description = "KeyStore(JKS) file the contains trust certificates for TLS"
+    sensitive = true
+}
+
+variable "TRUST_CERTIFICATE_KEYSTORE_PWD" {
+    type = string
+    description = "Pwd to access keystore file the contains trust certificates for TLS"
+    sensitive = true
+}
+
+variable "CLIENT_CERTIFICATE_KEYSTORE_FILE" {
+    type = string
+    default = "client-cert.jks"
+    description = "KeyStore(JKS) file the contains client certificates for TLS"
+    sensitive = true
+}
+
+variable "CLIENT_CERTIFICATE_KEYSTORE_PWD" {
+    type = string
+    description = "Pwd to access keystore file the contains client certificates for TLS"
+    sensitive = true
+}

@@ -8,4 +8,5 @@ resource "google_compute_subnetwork" "directvpc_subnet" {
     ip_cidr_range = "10.0.4.0/24"
     network = data.google_compute_network.default.id
     stack_type = "IPV4_ONLY"
+    private_ip_google_access = true
 }

@@ -1,0 +1,35 @@
+
+### Consume internal Cloud Run service from Compute Engine
+
+1. Get ID Token(from Metadata Server) for calling Service:
+```
+curl -H "Metadata-Flavor: Google" 'http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=AUDIENCE&format=FORMAT&licenses=LICENSES'
+curl -H "Metadata-Flavor: Google" 'http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=[your_service]&format=[full|standard]&licenses=[true|null]'
+curl -H "Metadata-Flavor: Google" 'http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=https://onebank-controlplane-tnirsggenq-uc.a.run.app&format=full&licenses=true'
+```
+
+2. Call Service including ID Token
+```
+curl -H "Authorization: Bearer <id_token>" <your_service_endpoint>
+curl -H "Authorization: Bearer <id_token>" https://onebank-controlplane-tnirsggenq-uc.a.run.app/tasks?title=Learn
+curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImIyZjgwYzYzNDYwMGVkMTMwNzIxMDFhOGI0MjIwNDQzNDMzZGIyODIiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL29uZWJhbmstY29udHJvbHBsYW5lLXRuaXJzZ2dlbnEtdWMuYS5ydW4uYXBwIiwiYXpwIjoiMTE2MjE0MTM3NjEwNzU2NDgzNDk2IiwiZW1haWwiOiJvbmViYW5rLWNvbnRyb2xwbGFuZS1jbGllbnQtc2FAb25lYmFuay00MjcyMTcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZXhwIjoxNzI1NTc5NjE2LCJnb29nbGUiOnsiY29tcHV0ZV9lbmdpbmUiOnsiaW5zdGFuY2VfY3JlYXRpb25fdGltZXN0YW1wIjoxNzI1NTczOTc5LCJpbnN0YW5jZV9pZCI6IjI4NzQ3NzY1NjgxMzc3NDk5NDEiLCJpbnN0YW5jZV9uYW1lIjoib25lYmFuay1iYXN0aW9uLTEiLCJsaWNlbnNlX2lkIjpbIjIxNDcyODY3Mzk3NjU3MzgxMTEiXSwicHJvamVjdF9pZCI6Im9uZWJhbmstNDI3MjE3IiwicHJvamVjdF9udW1iZXIiOjEyOTAwMDA0MzgwMiwiem9uZSI6InVzLWNlbnRyYWwxLWEifX0sImlhdCI6MTcyNTU3NjAxNiwiaXNzIjoiaHR0cHM6Ly9hY2NvdW50cy5nb29nbGUuY29tIiwic3ViIjoiMTE2MjE0MTM3NjEwNzU2NDgzNDk2In0.GRzKguskjtN_XDxE2NKN2Pk_vLH1jm0Q6W6xLrP4JmBwTSbIDOgk6iH6mpXMFRTe2kzjvNxmEXsMbBvjmCwPcLZ_-yhQO85UVtAozQNenAROObpz3JhwYM5rd4WrotQhaR1exSuD4pxJxlz10sJChvj9l4geq6hmXUXZ9PJcMZh9_YTcpjWOCRqxWZ8rmAVsW6DMu5ODHAN5ZDkzj-fFh7s43h3YqhlK3poV9hpNc32YxvjaA-UJ7QD3s-YdAXu0TsHugnHu-G3QtRUgXFQGJ9O2u-7kvZR2w2OqJQT12wWb2FxXR_Vb9xE32zgUEGayFci0SM9b_hohgBox9dOpAg" https://onebank-controlplane-tnirsggenq-uc.a.run.app/tasks?title=Learn
+```
+
+### Additional Notes: 
+
+1. Get ID Token Info
+```
+curl "https://oauth2.googleapis.com/tokeninfo?id_token=<id_token>"
+curl "https://oauth2.googleapis.com/tokeninfo?id_token=<id_token>"
+curl "https://oauth2.googleapis.com/tokeninfo?id_token=eyJhbGciOiJSUzI1NiIsImtpZCI6ImIyZjgwYzYzNDYwMGVkMTMwNzIxMDFhOGI0MjIwNDQzNDMzZGIyODIiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL29uZWJhbmstY29udHJvbHBsYW5lLXRuaXJzZ2dlbnEtdWMuYS5ydW4uYXBwIiwiYXpwIjoiMTE2MjE0MTM3NjEwNzU2NDgzNDk2IiwiZW1haWwiOiJvbmViYW5rLWNvbnRyb2xwbGFuZS1jbGllbnQtc2FAb25lYmFuay00MjcyMTcuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiZXhwIjoxNzI1NTc4OTAyLCJnb29nbGUiOnsiY29tcHV0ZV9lbmdpbmUiOnsiaW5zdGFuY2VfY3JlYXRpb25fdGltZXN0YW1wIjoxNzI1NTczOTc5LCJpbnN0YW5jZV9pZCI6IjI4NzQ3NzY1NjgxMzc3NDk5NDEiLCJpbnN0YW5jZV9uYW1lIjoib25lYmFuay1iYXN0aW9uLTEiLCJsaWNlbnNlX2lkIjpbIjIxNDcyODY3Mzk3NjU3MzgxMTEiXSwicHJvamVjdF9pZCI6Im9uZWJhbmstNDI3MjE3IiwicHJvamVjdF9udW1iZXIiOjEyOTAwMDA0MzgwMiwiem9uZSI6InVzLWNlbnRyYWwxLWEifX0sImlhdCI6MTcyNTU3NTMwMiwiaXNzIjoiaHR0cHM6Ly9hY2NvdW50cy5nb29nbGUuY29tIiwic3ViIjoiMTE2MjE0MTM3NjEwNzU2NDgzNDk2In0.VeL0pF9gamxpgPuDBRx0tvwPHGB9xhRH3lUx03xt1ALsqogd8uTZ2rElDJnZzin4pxrtknbiCCCxnduZ9P7QX7eeCfFDUJxgidEuttPN47s31ZLQFqm7R_IwWjfHMu5PwCndV6lLX8VbgivRt_bOOZRLLQTl8JPc1y5RdzypbBbyaOqb3vpbxant6h0tCYQJzwHjrSpE5PPkHgmFLRwFJBD3Bfly4cQhu4R_WqDn0TjbrqhMyhv7b9jTCug-UrrON_n06p90y9XtvigPypNoFwWVp21Dqp9qGNPhIkKP9nkt1uOyjV5h_OFPqiqm6WLjZzWWcNaqeM2mHP15q5kZsA"
+```
+
+2. Test service connection:
+```
+curl -m 2 https://onebank-controlplane-tnirsggenq-uc.a.run.app/tasks?title=Learn
+```
+
+### Aditional Lnks
+- [Authenticating service-to-service](https://cloud.google.com/run/docs/authenticating/service-to-service)
+- [Get an ID token](https://cloud.google.com/docs/authentication/get-id-token)
+- [Verify VM identity](https://cloud.google.com/compute/docs/instances/verifying-instance-identity)

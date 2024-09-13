@@ -13,3 +13,7 @@ output "bucket_url" {
 output "site_url" {
     value = google_storage_bucket_object.site.self_link
 }
+
+output "site_content" {
+    value = data.http.read_file_successful.response_body
+}

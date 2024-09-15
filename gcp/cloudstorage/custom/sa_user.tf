@@ -4,8 +4,8 @@
 resource "google_service_account" "user_sa" {
     project = data.google_project.onebank.project_id
     account_id = "${local.applicationId}-gcs-user-sa"
-    display_name = "Service Account for OneBank Cloud Storage Buckets"
-    description = "Service Account for Cloud Storage Buckets"
+    display_name = "Object User Service Account"
+    description = "Service Account with Cloud Storage Object User Permission"
 }
 
 # Roles
@@ -19,7 +19,7 @@ resource "google_service_account" "user_sa" {
 resource "google_storage_bucket_iam_member" "bucket_object_user_role" {
     bucket = google_storage_bucket.default.name
     role = "roles/storage.objectUser"
-    member = "serviceAccount:${google_service_account.creator_sa.email}"
+    member = "serviceAccount:${google_service_account.user_sa.email}"
 }
 
 resource "google_service_account_key" "user_key" {
@@ -35,4 +35,6 @@ data "google_service_account_access_token" "user_access_token" {
     target_service_account = google_service_account.user_sa.email
     lifetime = "1800s"
     scopes = [ "cloud-platform", "userinfo-email" ]
+
+    depends_on = [ google_storage_bucket_iam_member.bucket_object_user_role ]
 }

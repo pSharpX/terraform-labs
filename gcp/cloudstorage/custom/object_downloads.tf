@@ -1,5 +1,6 @@
 # https://cloud.google.com/storage/docs/authentication
 # https://cloud.google.com/storage/docs/request-endpoints
+# https://cloud.google.com/storage/docs/downloading-objects
 
 data "http" "viewer_download_object_successful" {
     url = "https://storage.googleapis.com/storage/v1/b/${google_storage_bucket.default.name}/o/${google_storage_bucket_object.site.output_name}?alt=media"

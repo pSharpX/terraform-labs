@@ -24,7 +24,7 @@ resource "google_storage_bucket_iam_member" "bucket_object_viewer_role" {
 
 resource "google_storage_bucket_iam_member" "bucket_object_creator_role" {
     bucket = google_storage_bucket.default.name
-    role = "roles/storage.objectCreator"
+    role = "roles/storage.objectUser"
     member = "serviceAccount:${google_service_account.default.email}"
 }
 

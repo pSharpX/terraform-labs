@@ -2,6 +2,9 @@
 
 data "http" "download_object_successful" {
     url = data.google_storage_object_signed_url.signed_url_for_download.signed_url
+    request_headers = {
+      "Content-Type" = "text/html"
+    }
     
     lifecycle {
         postcondition {

@@ -22,6 +22,10 @@ output "object_mediaLink" {
     value = google_storage_bucket_object.site.media_link
 }
 
-output "signed_object_url" {
-    value = data.google_storage_object_signed_url.signed_object_url.signed_url
+output "signed_url_for_download" {
+    value = data.google_storage_object_signed_url.signed_url_for_download.signed_url
+}
+
+output "signed_url_for_upload" {
+    value = data.google_storage_object_signed_url.signed_url_for_upload.signed_url
 }

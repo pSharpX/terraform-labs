@@ -61,3 +61,8 @@ variable "DATA_CLASSIFICATION" {
     type = string
     description = "A classification for the type of data managed by resources"
 }
+
+variable "SOURCE_PATH" {
+    type = string
+    description = "Path of the application source to be deployed as cloud function"
+}

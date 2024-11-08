@@ -11,5 +11,5 @@ resource "google_storage_bucket" "default" {
 resource "google_storage_bucket_object" "source" {
     name = "${local.function_name}-src"
     bucket = google_storage_bucket.default.name
-    source = "./source/app.zip"
+    source = var.SOURCE_PATH
 }

@@ -36,3 +36,17 @@ resource "google_cloudfunctions2_function" "main" {
         all_traffic_on_latest_revision = true
     }
 }
+
+resource "google_cloudfunctions2_function_iam_member" "allUsers" {
+    location = google_cloudfunctions2_function.main.location
+    cloud_function = google_cloudfunctions2_function.main.name
+    role = "roles/cloudfunctions.invoker"
+    member = "allUsers"
+}
+
+resource "google_cloud_run_service_iam_member" "default" {
+    location = google_cloudfunctions2_function.main.location
+    service = google_cloudfunctions2_function.main.name
+    role = "roles/run.invoker"
+    member = "allUsers"
+}

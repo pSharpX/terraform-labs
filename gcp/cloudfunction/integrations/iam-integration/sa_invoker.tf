@@ -15,15 +15,16 @@ resource "google_service_account" "invoker_sa" {
 # roles/run.invoker (For 2nd gen function use cloud run's roles)
 # roles/cloudfunctions.viewer
 
-# resource "google_cloudfunctions2_function_iam_member" "cfn_function_invoker_role" {
-#     project = google_cloudfunctions2_function.main.project
-#     cloud_function = google_cloudfunctions2_function.main.name
-#     location = google_cloudfunctions2_function.main.location
-#     role = "roles/cloudfunctions.invoker"
-#     member = "serviceAccount:${google_service_account.invoker_sa.email}"
-# }
+resource "google_cloudfunctions2_function_iam_member" "cfn_function_invoker_role" {
+    project = google_cloudfunctions2_function.main.project
+    cloud_function = google_cloudfunctions2_function.main.name
+    location = google_cloudfunctions2_function.main.location
+    role = "roles/cloudfunctions.invoker"
+    member = "serviceAccount:${google_service_account.invoker_sa.email}"
+}
 
 resource "google_cloud_run_service_iam_member" "run_invoker_role" {
+    project = google_cloudfunctions2_function.main.project
     location = google_cloudfunctions2_function.main.location
     service = google_cloudfunctions2_function.main.name
     role = "roles/run.invoker"
@@ -43,9 +44,9 @@ data "google_service_account_access_token" "invoker_access_token" {
     target_service_account = google_service_account.invoker_sa.email
     lifetime = "1800s"
     scopes = [ "cloud-platform", "userinfo-email" ]
-    
+
     depends_on = [ 
-        //google_cloudfunctions2_function_iam_member.cfn_function_invoker_role,
+        google_cloudfunctions2_function_iam_member.cfn_function_invoker_role,
         google_cloud_run_service_iam_member.run_invoker_role
     ]
 }

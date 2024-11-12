@@ -37,14 +37,14 @@ resource "google_cloudfunctions2_function" "main" {
     }
 }
 
-resource "google_cloudfunctions2_function_iam_member" "allUsers" {
+resource "google_cloudfunctions2_function_iam_member" "cfn_allUsers" {
     location = google_cloudfunctions2_function.main.location
     cloud_function = google_cloudfunctions2_function.main.name
     role = "roles/cloudfunctions.invoker"
     member = "allUsers"
 }
 
-resource "google_cloud_run_service_iam_member" "default" {
+resource "google_cloud_run_service_iam_member" "run_allUsers" {
     location = google_cloudfunctions2_function.main.location
     service = google_cloudfunctions2_function.main.name
     role = "roles/run.invoker"

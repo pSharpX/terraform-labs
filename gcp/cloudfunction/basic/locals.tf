@@ -10,4 +10,5 @@ locals {
     bucket_name = "${local.applicationId}-fn-bucket"
     function_name = "${local.applicationId}-createtask-fn"
     function_entrypoint = "org.springframework.cloud.function.adapter.gcp.GcfJarLauncher"
+    bucket_object_name = "${local.function_name}-src.zip"
  }

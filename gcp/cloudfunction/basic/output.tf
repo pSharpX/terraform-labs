@@ -13,3 +13,11 @@ output "bucket_url" {
 output "function_url" {
     value = google_cloudfunctions2_function.main.url
 }
+
+output "function_service_url" {
+    value = google_cloudfunctions2_function.main.service_config[0].uri
+}
+
+output "function_response" {
+    value = data.http.test_createtask_fn.response_body
+}

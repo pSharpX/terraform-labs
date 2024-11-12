@@ -9,7 +9,7 @@ resource "google_storage_bucket" "default" {
 }
 
 resource "google_storage_bucket_object" "source" {
-    name = "${local.function_name}-src"
+    name = local.bucket_object_name
     bucket = google_storage_bucket.default.name
     source = var.SOURCE_PATH
 }

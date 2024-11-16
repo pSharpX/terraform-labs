@@ -66,3 +66,8 @@ variable "SOURCE_PATH" {
     type = string
     description = "Path of the application source to be deployed as cloud function"
 }
+
+variable "REPOSITORY_ID" {
+    type = string
+    description = "Artifact Repository where cloud function image will be located"
+}

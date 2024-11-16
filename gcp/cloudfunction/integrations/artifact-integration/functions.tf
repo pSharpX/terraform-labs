@@ -9,6 +9,7 @@ resource "google_cloudfunctions2_function" "main" {
     build_config {
         runtime = "java17"
         entry_point = local.function_entrypoint
+        docker_repository = data.google_artifact_registry_repository.onebank_repository.id
         environment_variables = {
             BUILD_CONFIG_VAR = "test"
         }
@@ -39,7 +40,6 @@ resource "google_cloudfunctions2_function" "main" {
     }
 
     depends_on = [ 
-        google_project_iam_member.storage_object_admin_permission,
-        google_project_iam_member.artifact_registry_writer_permission
+        time_sleep.wait_60s
     ]
 }

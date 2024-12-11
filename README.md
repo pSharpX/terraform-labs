@@ -372,3 +372,21 @@ kubectl delete service hello-world-rest-api
 kubectl delete deployment hello-world-rest-api
 gcloud container clusters delete my-cluster --zone us-central1-c
 ````
+
+### *Playing with Cloud PubSub*
+````bash
+gcloud config set project glowing-furnace-304608
+gcloud pubsub topics create topic-from-gcloud
+gcloud pubsub subscriptions create subscription-gcloud-1 --topic=topic-from-gcloud
+gcloud pubsub subscriptions create subscription-gcloud-2 --topic=topic-from-gcloud
+gcloud pubsub subscriptions pull subscription-gcloud-2
+gcloud pubsub subscriptions pull subscription-gcloud-1
+gcloud pubsub topics publish topic-from-gcloud --message="My First Message"
+gcloud pubsub topics publish topic-from-gcloud --message="My Second Message"
+gcloud pubsub topics publish topic-from-gcloud --message="My Third Message"
+gcloud pubsub subscriptions pull subscription-gcloud-1 --auto-ack
+gcloud pubsub subscriptions pull subscription-gcloud-2 --auto-ack
+gcloud pubsub topics list
+gcloud pubsub topics delete topic-from-gcloud
+gcloud pubsub topics list-subscriptions my-first-topic
+````

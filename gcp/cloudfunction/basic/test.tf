@@ -6,6 +6,7 @@ data "http" "test_createtask_fn" {
     method = "POST"
     request_body = jsonencode({
         taskTitle = "title"
+        taskDescription = "description"
     })
 
     lifecycle {

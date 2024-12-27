@@ -4,6 +4,9 @@
 data "http" "test_emailsender_fn" {
     url = google_cloudfunctions2_function.main.url
     method = "POST"
+    request_headers = {
+        Authorization = "Bearer ${data.google_service_account_access_token.invoker_access_token.access_token}"
+    }
     request_body = jsonencode({
         "id" = 1
         "channel" = "EMAIL"
@@ -11,8 +14,8 @@ data "http" "test_emailsender_fn" {
         "user" = "your_email"
         "title" = "Learn Terraform"
         "message" = "Learn Terraform from scratch"
-        "recipientName" = "your_name"
-        "recipientEmail" = "your_email"
+        "recipientName" = var.RECIPIENT_NAME
+        "recipientEmail" = var.RECIPIENT_EMAIL
         "templateName" = "task-created-template"
         "vars" = {
             "task_title" = "Learn Terraform"

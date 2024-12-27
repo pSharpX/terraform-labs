@@ -81,3 +81,13 @@ variable "APP_CONFIG_SECRETS" {
     type = map(string)
     description = "Require application secrets as environment variables"
 }
+
+variable "RECIPIENT_NAME" {
+    type = string
+    description = "Recipient name"
+}
+
+variable "RECIPIENT_EMAIL" {
+    type = string
+    description = "Recipient email"
+}

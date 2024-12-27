@@ -29,6 +29,12 @@ resource "google_cloud_run_service_iam_member" "run_invoker_permission" {
     member = "serviceAccount:${google_service_account.invoker_sa.email}"
 }
 
+data "google_service_account_access_token" "invoker_access_token" {
+    target_service_account = google_service_account.invoker_sa.email
+    lifetime = "1800s"
+    scopes = [ "cloud-platform", "userinfo-email" ]
+}
+
 resource "time_sleep" "wait_60s_for_invoker" {
   create_duration = "60s"
 

@@ -1,0 +1,32 @@
+CREDENTIALS_FILE = "your_sa_credential_file_path"
+PROJECT_ID = "your_project_id"
+SOURCE_PATH = "path_of_application_to_be_deployed"
+REPOSITORY_ID = "repository_where_cf_image_be_located
+APP_CONFIG_PROPS = {
+    "task-master.notification.enabled" = "false"
+    "task-master.notification.template.provider" = "mailchimp|sendgrid"
+    "task-master.channel.email.mailchimp.url" = "https://mandrillapp.com"
+    "task-master.channel.email.mailchimp.apiVersion" = "/api/1.0"
+    "task-master.channel.email.mailchimp.basePath" = "https://mandrillapp.com/api/1.0"
+    "task-master.channel.email.mailchimp.config.mergeLanguage" = "handlebars"
+    "task-master.channel.email.mailchimp.from.email" = "your_email"
+    "task-master.channel.email.mailchimp.from.name" = "your_name"
+
+    "task-master.channel.email.sendgrid.url" = "https://api.sendgrid.com"
+    "task-master.channel.email.sendgrid.apiVersion" = "/v3"
+    "task-master.channel.email.sendgrid.basePath" = "https://api.sendgrid.com/v3"
+    "task-master.channel.email.sendgrid.templateGeneration" = "dynamic"
+    "task-master.channel.email.sendgrid.defaultSubject" = "default_subject"
+    "task-master.channel.email.sendgrid.from.email" = "your_email"
+    "task-master.channel.email.sendgrid.from.name" = "your_name"
+
+    "task-master.notification.template.storage.enabled" = "false"
+    "task-master.notification.template.storage.projectId" = "project_id_where_templates_located"
+    "task-master.notification.template.storage.locationId" = "storage_templates_locationId"
+}
+APP_CONFIG_SECRETS = {
+    "TASK-MASTER_CHANNEL_EMAIL_MAILCHIMP_APIKEY" = "your_mailchimp_apikey"
+    "TASK-MASTER_CHANNEL_EMAIL_SENDGRID_APIKEY" = "your_sendgrid_apikey"
+}
+RECIPIENT_EMAIL = "your_email"
+RECIPIENT_NAME = "your_name"

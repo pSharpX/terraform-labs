@@ -16,5 +16,6 @@ locals {
     topic_name = "${local.applicationId}-transport-topic"
     publisher_sa_name = "${local.application_name}-publisher-sa"
     subscriber_sa_name = "${local.application_name}-subscriber-sa"
-    template_trigger = "${local.application_name}-templates-trigger"
+    finalized_template_trigger = "${local.application_name}-finalized-template-trigger"
+    deleted_template_trigger = "${local.application_name}-deleted-template-trigger"
  }

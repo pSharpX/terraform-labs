@@ -11,6 +11,7 @@ APP_CONFIG_PROPS = {
     "task-master.channel.email.mailchimp.config.mergeLanguage" = "handlebars"
     "task-master.channel.email.mailchimp.from.email" = "your_email"
     "task-master.channel.email.mailchimp.from.name" = "your_name"
+    "task-master.channel.email.mailchimp.logger.level" = "NONE"
 
     "task-master.channel.email.sendgrid.url" = "https://api.sendgrid.com"
     "task-master.channel.email.sendgrid.apiVersion" = "/v3"
@@ -19,10 +20,29 @@ APP_CONFIG_PROPS = {
     "task-master.channel.email.sendgrid.defaultSubject" = "default_subject"
     "task-master.channel.email.sendgrid.from.email" = "your_email"
     "task-master.channel.email.sendgrid.from.name" = "your_name"
+    "task-master.channel.email.sendgrid.logger.level" = "NONE"
 
     "task-master.notification.template.storage.enabled" = "false"
     "task-master.notification.template.storage.projectId" = "project_id_where_templates_located"
     "task-master.notification.template.storage.locationId" = "storage_templates_locationId"
+
+    "logbook.strategy" = "body-only-if-status-at-least"
+    "logbook.minimum-status" = "400"
+    "logbook.format.style" = "http"
+    "logbook.write.chunk-size" = "1000"
+    "logbook.predicate.include[0].path" = "/api/**"
+    "logbook.predicate.include[0].methods[0]" = "GET"
+    "logbook.predicate.include[0].methods[1]" = "POST"
+    "logbook.predicate.include[1].path" = "/actuator/**"
+    "logbook.predicate.exclude[0].path" = "/actuator/health"
+    "logbook.predicate.exclude[1].path" = "/api/admin/**"
+    "logbook.predicate.exclude[1].methods[0]" = "POST"
+    "logbook.obfuscate.headers[0]" = "Authorization"
+    "logbook.obfuscate.headers[1]" = "X-Secret"
+    "logbook.obfuscate.parameters[0]" = "access_token"
+    "logbook.obfuscate.parameters[1]" = "password"
+    "logbook.obfuscate.jsonBodyFields[0]" = "key"
+    "logbook.obfuscate.replacement" = "XXX"
 }
 APP_CONFIG_SECRETS = {
     "TASK-MASTER_CHANNEL_EMAIL_MAILCHIMP_APIKEY" = "your_mailchimp_apikey"

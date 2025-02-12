@@ -14,21 +14,6 @@ variable "API_TOKEN" {
     description = "API Token used to consume Okta Management API"
 }
 
-variable "OKTA_CLIENT_ID" {
-    type = string
-    description = "Okta Client ID used to consume Okta Management API"
-}
-
-variable "OKTA_CLIENT_SECRET" {
-    type = string
-    description = "Okta Client Secret used to consume Okta Management API"
-}
-
-variable "OKTA_AUDIENCE" {
-    type = string
-    description = "Default audience used to consume Okta Management API"
-}
-
 variable "APPLICATION_ID" {
     default = "onebank"
     type = string

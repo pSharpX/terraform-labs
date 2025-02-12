@@ -64,6 +64,44 @@ variable "DATA_CLASSIFICATION" {
     description = "A classification for the type of data managed by resources"
 }
 
+variable "USERS" {
+    type = list(object({
+      email = string
+      first_name = string
+      last_name = string
+      nick_name = string
+      display_name = string
+      profile_url = string
+      state = string
+    }))
+    description = "List of users to be provisioned on Okta"
+    default = [ {
+        email = "tojapoj886@intady.com"
+        first_name = "tojapoj"
+        last_name = "intady"
+        nick_name = "tojapoj886"
+        profile_url = "https://github.com/psharpx"
+        display_name = "Tojapoj"
+        state = "ACTIVE"
+    }, {
+        email = "labebin272@intady.com"
+        first_name = "labebin"
+        last_name = "intady"
+        nick_name = "labebin272"
+        profile_url = "https://github.com/psharpx"
+        display_name = "Labebin"
+        state = "ACTIVE"
+    }, {
+        email = "cefipig918@nike4s.com"
+        first_name = "cefipig"
+        last_name = "nike4s"
+        nick_name = "cefipig918"
+        profile_url = "https://github.com/psharpx"
+        display_name = "Cefipig"
+        state = "SUSPENDED"
+    } ]
+}
+
 variable "USER_PWD" {
     type = string
     description = "Password for used being provisioned"

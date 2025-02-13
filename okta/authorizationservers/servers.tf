@@ -7,6 +7,12 @@ resource "okta_auth_server" "onebank" {
     status = "ACTIVE"
 }
 
+resource "okta_trusted_origin" "rabbitmq_origin" {
+    name = "rabbitmq-local-origin"
+    origin = "http://localhost:15672"
+    scopes = [ "CORS" ]
+}
+
 resource "okta_auth_server_policy" "default" {
     auth_server_id = okta_auth_server.onebank.id
     name = "default_policy"

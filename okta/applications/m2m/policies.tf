@@ -49,6 +49,8 @@ resource "okta_auth_server_policy_rule" "rabbitmq_default_rule" {
     access_token_lifetime_minutes = 60
     refresh_token_lifetime_minutes = 43200
     refresh_token_window_minutes = 10080
+    
+    depends_on = [ okta_auth_server_policy_rule.default_rule ]
 }
 
 resource "okta_auth_server_policy_rule" "taskmaster_default_rule" {
@@ -72,4 +74,6 @@ resource "okta_auth_server_policy_rule" "taskmaster_default_rule" {
     access_token_lifetime_minutes = 60
     refresh_token_lifetime_minutes = 43200
     refresh_token_window_minutes = 10080
+
+    depends_on = [ okta_auth_server_policy_rule.rabbitmq_default_rule ]
 }

@@ -13,3 +13,8 @@ resource "okta_group_memberships" "taskmaster_membership" {
 
     depends_on = [ okta_user.devops ]
 }
+
+resource "okta_group_memberships" "custom_admin_membership" {
+    group_id = okta_group.custom_admin_group.id
+    users = [ okta_user.super_admin_user.id ]
+}

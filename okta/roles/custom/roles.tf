@@ -34,26 +34,38 @@ resource "okta_admin_role_custom" "onebank_general_role" {
     ]
 }
 
-resource "okta_resource_set" "default_resources" {
-    label = "AllUsersAppsGroups"
+resource "okta_resource_set" "uri_based_resource_set" {
+    label = "AllUsersAppsGroups_URI"
     description = "All the users, apps and groups"
     resources = [
         "${local.org_url}/api/v1/users",
         "${local.org_url}/api/v1/groups",
-        "${local.org_url}/api/v1/apps"
+        "${local.org_url}/api/v1/apps",
+        "${local.org_url}/api/v1/authorizationServers"
     ]
 }
 
-resource "okta_group_role" "onebank_administrator_group_role" {
+resource "okta_resource_set" "orn_based_resource_set" {
+    label = "AllUsersAppsGroups_ORN"
+    description = "All the users, apps and groups"
+    resources = [
+        "orn:okta:directory:${data.okta_org_metadata.__.id}:users",
+        "orn:okta:directory:${data.okta_org_metadata.__.id}:groups",
+        "orn:okta:idp:${data.okta_org_metadata.__.id}:apps",
+        "orn:okta:idp:${data.okta_org_metadata.__.id}:authorization_servers"
+    ]
+}
+
+resource "okta_group_role" "onebank_administrator_role_binding" {
     group_id = okta_group.administrator_group.id
     role_id = okta_admin_role_custom.onebank_administrator_role.id
-    resource_set_id = okta_resource_set.default_resources.id
+    resource_set_id = okta_resource_set.orn_based_resource_set.id
     role_type = "CUSTOM"
 }
 
-resource "okta_group_role" "onebank_general_group_role" {
+resource "okta_group_role" "onebank_general_role_binding" {
     group_id = okta_group.general_group.id
     role_id = okta_admin_role_custom.onebank_general_role.id
-    resource_set_id = okta_resource_set.default_resources.id
+    resource_set_id = okta_resource_set.uri_based_resource_set.id
     role_type = "CUSTOM"
 }

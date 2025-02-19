@@ -1,6 +1,6 @@
 # https://registry.terraform.io/providers/okta/okta/latest/docs/resources/app_oauth
 
-resource "okta_app_oauth" "rabbitmq_m2m" {
+resource "okta_app_oauth" "rabbitmq_app" {
     label = local.rabbitmq_application
     type = "web"
     grant_types = [
@@ -22,7 +22,7 @@ resource "okta_app_oauth" "rabbitmq_m2m" {
     status = "ACTIVE"
 }
 
-resource "okta_app_oauth" "taskmaster_m2m" {
+resource "okta_app_oauth" "taskmaster_app" {
     label = local.taskmaster_application
     type = "web"
     grant_types = [

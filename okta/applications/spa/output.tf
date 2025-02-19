@@ -7,11 +7,11 @@ output "issuer_url" {
 }
 
 output "rabbitmq_client_id" {
-    value = okta_app_oauth.rabbitmq_m2m.client_id
+    value = okta_app_oauth.rabbitmq_app.client_id
 }
 
 output "taskmaster_client_id" {
-    value = okta_app_oauth.taskmaster_m2m.client_id
+    value = okta_app_oauth.taskmaster_app.client_id
 }
 
 output "rabbitmq_test_status_code" {

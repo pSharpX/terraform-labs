@@ -10,8 +10,8 @@ resource "time_sleep" "wait_10s" {
         okta_auth_server_scope.taskmaster_write_scope,
         okta_auth_server_scope.taskmaster_read_scope,
         okta_auth_server_policy_rule.taskmaster_default_rule,
-        okta_app_oauth.rabbitmq_m2m,
-        okta_app_oauth.taskmaster_m2m
+        okta_app_oauth.rabbitmq_app,
+        okta_app_oauth.taskmaster_app
     ]
 }
 
@@ -21,7 +21,7 @@ data "http" "test_rabbitmq_access_token" {
     request_headers = {
         "Content-Type" = "application/x-www-form-urlencoded"
     }
-    request_body = "grant_type=client_credentials&client_id=${okta_app_oauth.rabbitmq_m2m.client_id}&client_secret=${okta_app_oauth.rabbitmq_m2m.client_secret}&scope=${okta_auth_server_scope.rabbitmq_write_scope.name}"
+    request_body = "grant_type=client_credentials&client_id=${okta_app_oauth.rabbitmq_app.client_id}&client_secret=${okta_app_oauth.rabbitmq_app.client_secret}&scope=${okta_auth_server_scope.rabbitmq_write_scope.name}"
 
     lifecycle {
         postcondition {
@@ -41,7 +41,7 @@ data "http" "test_taskmaster_access_token" {
     request_headers = {
         "Content-Type" = "application/x-www-form-urlencoded"
     }
-    request_body = "grant_type=client_credentials&client_id=${okta_app_oauth.taskmaster_m2m.client_id}&client_secret=${okta_app_oauth.taskmaster_m2m.client_secret}&scope=${okta_auth_server_scope.taskmaster_write_scope.name}"
+    request_body = "grant_type=client_credentials&client_id=${okta_app_oauth.taskmaster_app.client_id}&client_secret=${okta_app_oauth.taskmaster_app.client_secret}&scope=${okta_auth_server_scope.taskmaster_write_scope.name}"
 
     lifecycle {
         postcondition {

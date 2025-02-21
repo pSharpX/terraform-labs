@@ -9,5 +9,5 @@ locals {
     }
     authorization_server = "${local.applicationId}-auth-server"
     rabbitmq_application = "${local.applicationId}-rabbitmq-spa"
-    taskmaster_application = "${local.applicationId}-taskmaster-spa"
+    taskmaster_application = "${local.applicationId}-taskmaster-web"
  }

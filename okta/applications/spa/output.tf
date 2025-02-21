@@ -10,11 +10,6 @@ output "rabbitmq_client_id" {
     value = okta_app_oauth.rabbitmq_app.client_id
 }
 
-output "rabbitmq_client_secret" {
-    value = okta_app_oauth.rabbitmq_app.client_secret
-    sensitive = true
-}
-
 output "taskmaster_client_id" {
     value = okta_app_oauth.taskmaster_app.client_id
 }

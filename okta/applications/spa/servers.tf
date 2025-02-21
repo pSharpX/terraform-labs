@@ -13,6 +13,17 @@ resource "okta_trusted_origin" "rabbitmq_origin" {
     scopes = [ "CORS" ]
 }
 
+resource "okta_auth_server_claim" "rabbitmq_role_claim" {
+    auth_server_id = okta_auth_server.onebank.id
+    name = "role"
+    value_type = "EXPRESSION"
+    value = "isMemberOfGroupName(\"${okta_group.rabbitmq_group.name}\") ? \"${okta_auth_server_scope.rabbitmq_administrator_scope.name}\" : isMemberOfGroupName(\"monitoring\") ? \"monitoring\" : \"\""
+    # claim_type (String) Specifies whether the claim is for an access token RESOURCE or ID token IDENTITY.
+    claim_type = "RESOURCE"
+    always_include_in_token = true
+    status = "ACTIVE"
+}
+
 resource "okta_auth_server_scope" "rabbitmq_write_scope" {
     auth_server_id = okta_auth_server.onebank.id
     name = "rabbitmq.write:*/*"
@@ -34,6 +45,14 @@ resource "okta_auth_server_scope" "rabbitmq_configure_scope" {
     name = "rabbitmq.configure:*/*"
     display_name = "rabbitmq.configure"
     description = "Configure permission allows users to declare, modify, or delete exchanges and queues"
+    consent = "IMPLICIT"
+}
+
+resource "okta_auth_server_scope" "rabbitmq_administrator_scope" {
+    auth_server_id = okta_auth_server.onebank.id
+    name = "rabbitmq.tag:administrator"
+    display_name = "rabbitmq.tag:administrator"
+    description = "Configure permission allows users to access management tool"
     consent = "IMPLICIT"
 }
 

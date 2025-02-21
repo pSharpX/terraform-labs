@@ -42,8 +42,13 @@ resource "okta_auth_server_policy_rule" "rabbitmq_default_rule" {
     scope_whitelist = [
         okta_auth_server_scope.rabbitmq_write_scope.name,
         okta_auth_server_scope.rabbitmq_read_scope.name,
-        okta_auth_server_scope.rabbitmq_configure_scope.name
+        okta_auth_server_scope.rabbitmq_configure_scope.name,
+        okta_auth_server_scope.rabbitmq_administrator_scope.name,
+        "openid",
+        "profile",
+        "email"
     ]
+
     priority = 2
     status = "ACTIVE"
     access_token_lifetime_minutes = 60

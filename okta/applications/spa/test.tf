@@ -6,6 +6,7 @@ resource "time_sleep" "wait_10s" {
         okta_auth_server_scope.rabbitmq_configure_scope,
         okta_auth_server_scope.rabbitmq_write_scope,
         okta_auth_server_scope.rabbitmq_read_scope,
+        okta_auth_server_scope.rabbitmq_administrator_scope,
         okta_auth_server_scope.taskmaster_configure_scope,
         okta_auth_server_scope.taskmaster_write_scope,
         okta_auth_server_scope.taskmaster_read_scope,

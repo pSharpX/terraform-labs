@@ -1,23 +1,20 @@
 # https://registry.terraform.io/providers/okta/okta/latest/docs/resources/app_oauth
+# https://github.com/oktadev/okta-dac/blob/master/terraform/main.tf
 
 resource "okta_app_oauth" "rabbitmq_app" {
     label = local.rabbitmq_application
-    type = "web"
+    type = "browser"
     grant_types = [
-        "authorization_code",
-        "refresh_token",
-        "implicit"
+        "authorization_code"
     ]
     response_types = [
-        "code",
-        "token",
-        "id_token",
+        "code"
     ]
-    omit_secret = false
     hide_ios = true
     hide_web = true
-    pkce_required = false
+    pkce_required = true
     redirect_uris = var.ALLOWED_CALLBACK_URLS
+    token_endpoint_auth_method = "none"
     post_logout_redirect_uris = [
         "https://localhost:15672"
     ]
@@ -41,7 +38,7 @@ resource "okta_app_oauth" "taskmaster_app" {
     omit_secret = false
     hide_ios = true
     hide_web = true
-    pkce_required = true
+    pkce_required = false
     redirect_uris = var.ALLOWED_CALLBACK_URLS
     post_logout_redirect_uris = [
         "https://localhost:15672"

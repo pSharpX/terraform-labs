@@ -3,7 +3,7 @@
 resource "okta_auth_server" "onebank" {
     name = local.authorization_server
     description = "Default authorization server for all onebank-concern applications"
-    audiences = [ "api://onebank" ]
+    audiences = [ "api://${local.applicationId}" ]
     status = "ACTIVE"
 }
 
@@ -17,17 +17,18 @@ resource "okta_auth_server_claim" "rabbitmq_role_claim" {
     auth_server_id = okta_auth_server.onebank.id
     name = "role"
     value_type = "EXPRESSION"
-    value = "isMemberOfGroupName(\"${okta_group.rabbitmq_group.name}\") ? \"${okta_auth_server_scope.rabbitmq_administrator_scope.name}\" : isMemberOfGroupName(\"monitoring\") ? \"monitoring\" : \"\""
+    value = local.rabbitmq_role_claim_expression
     # claim_type (String) Specifies whether the claim is for an access token RESOURCE or ID token IDENTITY.
     claim_type = "RESOURCE"
     always_include_in_token = true
+    #scopes = [  ]
     status = "ACTIVE"
 }
 
 resource "okta_auth_server_scope" "rabbitmq_write_scope" {
     auth_server_id = okta_auth_server.onebank.id
     name = "rabbitmq.write:*/*"
-    display_name = "rabbitmq.write"
+    display_name = "rabbitmq write"
     description = "Write permission allow users to publish to exchanges"
     consent = "IMPLICIT"
 }
@@ -35,7 +36,7 @@ resource "okta_auth_server_scope" "rabbitmq_write_scope" {
 resource "okta_auth_server_scope" "rabbitmq_read_scope" {
     auth_server_id = okta_auth_server.onebank.id
     name = "rabbitmq.read:*/*"
-    display_name = "rabbitmq.read"
+    display_name = "rabbitmq read"
     description = "Read permission allows users to consume messages from queues and use bindings"
     consent = "IMPLICIT"
 }
@@ -43,7 +44,7 @@ resource "okta_auth_server_scope" "rabbitmq_read_scope" {
 resource "okta_auth_server_scope" "rabbitmq_configure_scope" {
     auth_server_id = okta_auth_server.onebank.id
     name = "rabbitmq.configure:*/*"
-    display_name = "rabbitmq.configure"
+    display_name = "rabbitmq configure"
     description = "Configure permission allows users to declare, modify, or delete exchanges and queues"
     consent = "IMPLICIT"
 }
@@ -51,8 +52,8 @@ resource "okta_auth_server_scope" "rabbitmq_configure_scope" {
 resource "okta_auth_server_scope" "rabbitmq_administrator_scope" {
     auth_server_id = okta_auth_server.onebank.id
     name = "rabbitmq.tag:administrator"
-    display_name = "rabbitmq.tag:administrator"
-    description = "Configure permission allows users to access management tool"
+    display_name = "rabbitmq administrator"
+    description = "administrator permission allows users to access RabbitMQ Management tool"
     consent = "IMPLICIT"
 }
 

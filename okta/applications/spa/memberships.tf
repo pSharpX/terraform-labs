@@ -1,7 +1,7 @@
 # https://registry.terraform.io/providers/okta/okta/latest/docs/resources/group_memberships
 
-resource "okta_group_memberships" "rabbitmq_membership" {
-    group_id = okta_group.rabbitmq_group.id
+resource "okta_group_memberships" "rabbitmq_administrator_membership" {
+    group_id = okta_group.rabbitmq_administrator_group.id
     users = [for user in okta_user.developers: user.id]
 
     depends_on = [ okta_user.developers ]

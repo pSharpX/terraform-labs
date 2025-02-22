@@ -6,18 +6,22 @@ output "issuer_url" {
     value = okta_auth_server.onebank.issuer
 }
 
-output "rabbitmq_client_id" {
-    value = okta_app_oauth.rabbitmq_app.client_id
+output "rabbitmq_management_client_id" {
+    value = okta_app_oauth.rabbitmq_management_app.client_id
+}
+
+output "rabbitmq_consumer_client_id" {
+    value = okta_app_oauth.rabbitmq_consumer_m2m_app.client_id
+}
+
+output "rabbitmq_producer_client_id" {
+    value = okta_app_oauth.rabbitmq_producer_m2m_app.client_id
 }
 
 output "taskmaster_client_id" {
     value = okta_app_oauth.taskmaster_app.client_id
 }
 
-output "rabbitmq_test_status_code" {
-    value = data.http.test_rabbitmq_access_token.status_code
-}
-
-output "taskmaster_test_status_code" {
-    value = data.http.test_taskmaster_access_token.status_code
+output "rabbitmq_consumer_test_status_code" {
+    value = data.http.test_rabbitmq_consumer_access_token.status_code
 }

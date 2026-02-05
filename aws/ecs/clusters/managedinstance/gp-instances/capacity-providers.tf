@@ -58,6 +58,14 @@ resource "aws_ecs_capacity_provider" "gp_cap_provider" {
     } 
 }
 
+resource "time_sleep" "wait_2_min" {
+    create_duration = "90s"
+
+    depends_on = [
+        aws_ecs_capacity_provider.gp_cap_provider
+    ]
+}
+
 resource "aws_ecs_cluster_capacity_providers" "default_capacity_provider" {
     cluster_name = aws_ecs_cluster.onebank_cluster.name
     capacity_providers = [
@@ -71,6 +79,6 @@ resource "aws_ecs_cluster_capacity_providers" "default_capacity_provider" {
     }
 
     depends_on = [
-        aws_ecs_capacity_provider.gp_cap_provider
+        time_sleep.wait_2_min
     ]
 }

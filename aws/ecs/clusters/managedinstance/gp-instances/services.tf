@@ -23,7 +23,6 @@ resource "aws_ecs_service" "nginx_service" {
     }
 
     depends_on = [
-        aws_ecs_cluster.onebank_cluster,
-        aws_ecs_capacity_provider.gp_cap_provider
+        time_sleep.wait_2_min
     ]
 }

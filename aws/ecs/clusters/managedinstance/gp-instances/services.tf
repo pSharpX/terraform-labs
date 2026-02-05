@@ -5,7 +5,7 @@ resource "aws_ecs_service" "nginx_service" {
     task_definition = aws_ecs_task_definition.nginx_task.arn
     desired_count = 1
     tags = local.common_tags
-    force_new_deployment = true
+    force_new_deployment = false
 
     network_configuration {
         subnets = [  

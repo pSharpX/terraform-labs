@@ -1,5 +1,5 @@
 locals {
-    cluster_type = "fg"
+    cluster_type = "mi"
     cluster_name = "${var.CLUSTER_NAME}-${var.ENVIRONMENT}-${local.cluster_type}-ecs"
     task_definition_name = "${var.ENVIRONMENT}-${var.CLUSTER_NAME}-${var.APPLICATION_NAME}"
     common_tags = {
@@ -10,5 +10,5 @@ locals {
         Provisioner = var.PROVISIONER
     }
     cluster_tags = merge({Name = local.cluster_name}, local.common_tags)
-    secgrup_name = "http_ingress"
+    secgrup_name = "${var.APPLICATION_ID}-allow-traffic"
 }

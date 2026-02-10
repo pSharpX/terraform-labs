@@ -16,7 +16,8 @@ resource "aws_iam_policy" "terraform_state_policy" {
         Effect = "Allow"
         Action = [
           "s3:GetObject",
-          "s3:PutObject"
+          "s3:PutObject",
+          "s3:DeleteObject"
         ]
         Resource = "${var.STATE_BUCKET_ARN}/*"
       },

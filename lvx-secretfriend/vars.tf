@@ -32,6 +32,12 @@ variable "PROVISIONER" {
   description = "Tool used to provision resources"
 }
 
+variable "USER_GROUP" {
+  default     = "administrators"
+  type        = string
+  description = "IAM Group where user will belong to"
+}
+
 variable "DATA_CLASSIFICATION" {
   default     = "Restricted"
   type        = string

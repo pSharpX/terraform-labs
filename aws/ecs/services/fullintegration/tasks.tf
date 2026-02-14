@@ -29,6 +29,13 @@ resource "aws_ecs_task_definition" "application_task" {
           value = var.APPLICATION_NAME
         }
       ]
+      healthCheck = {
+        command     = ["CMD-SHELL", "curl -f http://localhost/ || exit 1"]
+        interval    = 30
+        timeout     = 5
+        retries     = 3
+        startPeriod = 10
+      }
     }
   ])
 

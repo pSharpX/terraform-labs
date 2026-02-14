@@ -1,6 +1,7 @@
 # nat gw
 resource "aws_eip" "nat" {
-    vpc = true
+    domain = "vpc"
+    tags = local.common_tags
 }
 
 resource "aws_nat_gateway" "nat-gw" {

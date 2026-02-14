@@ -43,9 +43,3 @@ variable "CLUSTER_NAME" {
     type = string
     description = "ECS cluster to manage all workload"
 }
-
-variable "APPLICATION_NAME" {
-    default = "notifications"
-    type = string
-    description = "An containarized application running on ECS cluster"
-}

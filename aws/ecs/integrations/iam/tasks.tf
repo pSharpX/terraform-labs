@@ -1,6 +1,4 @@
 
-# EC2, EXTERNAL, FARGATE, MANAGED_INSTANCES.
-
 resource "aws_ecs_task_definition" "nginx_task" {
     family = local.task_definition_name
     cpu = 256

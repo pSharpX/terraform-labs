@@ -7,6 +7,11 @@ resource "aws_kms_key" "cluster_key" {
   tags                    = local.common_tags
 }
 
+resource "aws_kms_alias" "cluster_key_alias" {
+  name          = "alias/${var.ENVIRONMENT}/${var.APPLICATION_ID}/${local.cluster_name}"
+  target_key_id = aws_kms_key.cluster_key.id
+}
+
 resource "aws_kms_key_policy" "key_policies" {
   key_id = aws_kms_key.cluster_key.id
   policy = jsonencode({

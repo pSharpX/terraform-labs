@@ -3,7 +3,7 @@ resource "aws_subnet" "main-public-1" {
     cidr_block = "10.0.1.0/24"
     map_public_ip_on_launch = true
     availability_zone = "us-east-1a"
-    tags = merge({Name: "main-public-1"}, local.common_tags)
+    tags = merge({Name: "main-public-1", Tier: "Public"}, local.common_tags)
 }
 
 resource "aws_subnet" "main-public-2" {
@@ -11,7 +11,7 @@ resource "aws_subnet" "main-public-2" {
     cidr_block = "10.0.2.0/24"
     map_public_ip_on_launch = true
     availability_zone = "us-east-1b"
-    tags = merge({Name: "main-public-2"}, local.common_tags)
+    tags = merge({Name: "main-public-2", Tier: "Public"}, local.common_tags)
 }
 
 resource "aws_subnet" "main-public-3" {
@@ -19,7 +19,7 @@ resource "aws_subnet" "main-public-3" {
     cidr_block = "10.0.3.0/24"
     map_public_ip_on_launch = true
     availability_zone = "us-east-1c"
-    tags = merge({Name: "main-public-3"}, local.common_tags)
+    tags = merge({Name: "main-public-3", Tier: "Public"}, local.common_tags)
 }
 
 resource "aws_subnet" "main-private-1" {
@@ -27,7 +27,7 @@ resource "aws_subnet" "main-private-1" {
     cidr_block = "10.0.4.0/24"
     map_public_ip_on_launch = false
     availability_zone = "us-east-1a"
-    tags = merge({Name: "main-private-1"}, local.common_tags)
+    tags = merge({Name: "main-private-1", Tier: "Private"}, local.common_tags)
 }
 
 resource "aws_subnet" "main-private-2" {
@@ -35,7 +35,7 @@ resource "aws_subnet" "main-private-2" {
     cidr_block = "10.0.5.0/24"
     map_public_ip_on_launch = false
     availability_zone = "us-east-1b"
-    tags = merge({Name: "main-private-2"}, local.common_tags)
+    tags = merge({Name: "main-private-2", Tier: "Private"}, local.common_tags)
 }
 
 resource "aws_subnet" "main-private-3" {
@@ -43,7 +43,7 @@ resource "aws_subnet" "main-private-3" {
     cidr_block = "10.0.6.0/24"
     map_public_ip_on_launch = false
     availability_zone = "us-east-1c"
-    tags = merge({Name: "main-private-3"}, local.common_tags)
+    tags = merge({Name: "main-private-3", Tier: "Private"}, local.common_tags)
 }
 
 resource "aws_internet_gateway" "main-igw" {

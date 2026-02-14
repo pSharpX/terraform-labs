@@ -1,3 +1,5 @@
+# https://docs.aws.amazon.com/autoscaling/application/userguide/application-auto-scaling-target-tracking.html
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/appautoscaling_policy
 
 resource "aws_appautoscaling_target" "ecs_target" {
   max_capacity       = 4

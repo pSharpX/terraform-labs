@@ -7,6 +7,7 @@ resource "aws_appautoscaling_target" "ecs_target" {
   resource_id        = "service/${data.aws_ecs_cluster.default.cluster_name}/${aws_ecs_service.default_service.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
+  tags               = local.common_tags
 }
 
 resource "aws_appautoscaling_policy" "cpu_scale_out" {

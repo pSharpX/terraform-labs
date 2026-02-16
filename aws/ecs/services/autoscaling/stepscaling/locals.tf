@@ -1,4 +1,5 @@
 locals {
+  service_name         = "${var.APPLICATION_NAME}-${var.ENVIRONMENT}"
   task_definition_name = "${var.APPLICATION_NAME}-${var.ENVIRONMENT}"
   common_tags = {
     ApplicationId      = var.APPLICATION_ID

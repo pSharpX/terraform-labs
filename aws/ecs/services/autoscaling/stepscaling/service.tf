@@ -1,6 +1,6 @@
 
 resource "aws_ecs_service" "default_service" {
-  name             = local.task_definition_name
+  name             = local.service_name
   cluster          = data.aws_ecs_cluster.default.id
   task_definition  = aws_ecs_task_definition.application_task.arn
   desired_count    = 2

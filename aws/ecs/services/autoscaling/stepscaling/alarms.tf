@@ -1,6 +1,7 @@
 
 resource "aws_cloudwatch_metric_alarm" "cpu_high" {
-  alarm_name          = "ecs-cpu-high"
+  alarm_name          = "${local.service_name}-ecs-cpu-high"
+  alarm_description   = "This metric monitors cpu utilization for ${local.service_name}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 2
   metric_name         = "CPUUtilization"
@@ -8,6 +9,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
   period              = 60
   statistic           = "Average"
   threshold           = 70
+  tags                = local.common_tags
 
   dimensions = {
     ClusterName = data.aws_ecs_cluster.default.cluster_name
@@ -18,7 +20,8 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_low" {
-  alarm_name          = "ecs-cpu-low"
+  alarm_name          = "${local.service_name}-ecs-cpu-low"
+  alarm_description   = "This metric monitors cpu utilization for ${local.service_name}"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 3
   metric_name         = "CPUUtilization"
@@ -26,6 +29,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_low" {
   period              = 60
   statistic           = "Average"
   threshold           = 30
+  tags                = local.common_tags
 
   dimensions = {
     ClusterName = data.aws_ecs_cluster.default.cluster_name
